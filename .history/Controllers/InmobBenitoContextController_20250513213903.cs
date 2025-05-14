@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Scaffolding.Internal;
 
-
-
-namespace Inmobiliaria_Benito.Models;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Inmobiliaria_Benito.Models;
+namespace Inmobiliaria_Benito.Controllers;
 
 public partial class InmobBenitoContext : DbContext
 {
@@ -32,7 +34,7 @@ public partial class InmobBenitoContext : DbContext
 
     public virtual DbSet<Usuario> Usuarios { get; set; }
 
-  
+   
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

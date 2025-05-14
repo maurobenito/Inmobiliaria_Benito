@@ -1,0 +1,29 @@
+@model IEnumerable<Inmobiliaria_Benito.Models.Inmueble>
+
+<h2>Listado de Inmuebles</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Uso</th>
+            <th>Dirección</th>
+            <th>ID Propietario</th>
+            <th>ID Tipo</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Uso</td>
+            <td>@item.Direccion</td>
+            <td>@item.IdPropietario</td>
+            <td>@item.IdTipo</td>
+            <td>
+                <!-- Links a Editar/Eliminar si los agregás -->
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
