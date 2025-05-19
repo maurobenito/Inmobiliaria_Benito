@@ -1,0 +1,36 @@
+@model IEnumerable<Inmobiliaria_Benito.Models.Inquilino>
+
+<h2>Listado de Inquilinos</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Agregar nuevo</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>DNI</th>
+            <th>Teléfono</th>
+            <th>Email</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model) {
+        <tr>
+            <td>@item.Nombre</td>
+            <td>@item.Apellido</td>
+            <td>@item.Dni</td>
+            <td>@item.Telefono</td>
+            <td>@item.Email</td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.InquilinoId">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.InquilinoId">Detalles</a> |
+                <a asp-action="Delete" asp-route-id="@item.InquilinoId">Eliminar</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
