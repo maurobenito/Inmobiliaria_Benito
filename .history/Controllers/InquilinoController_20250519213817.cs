@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Inmobiliaria_Benito.Models;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
-
 
 namespace Inmobiliaria_Benito.Controllers
 {
@@ -67,45 +65,20 @@ namespace Inmobiliaria_Benito.Controllers
         }
 
         // GET: /Inquilino/Delete/5
-    // GET: /Inquilino/Delete/5
-
-
-public IActionResult Delete(int id)
+       public IActionResult Delete(int id)
 {
-    var entidad = _context.Inquilinos.Find(id);
-    if (entidad == null) return NotFound();
+    var inquilino = _context.Inquilinos.FirstOrDefault(i => i.InquilinoId == id);
+    if (inquilino == null)
+        return NotFound();
 
-    // Trae los contratos asociados, incluyendo los datos del inmueble
+    // Cargar contratos asociados
     var contratos = _context.Contratos
         .Where(c => c.IdInquilino == id)
-        .Include(c => c.IdInmuebleNavigation)
         .ToList();
 
     ViewBag.Contratos = contratos;
 
-    return View(entidad);
+    return View(inquilino);
 }
-
-
-
-        // POST: /Inquilino/Delete/5
-      [HttpPost, ActionName("Delete")]
-[ValidateAntiForgeryToken]
-public IActionResult DeleteConfirmed(int id)
-{
-    var inquilino = _context.Inquilinos.Find(id);
-
-    // Verifica si tiene contratos asociados
-    var tieneContratos = _context.Contratos.Any(c => c.IdInquilino == id);
-    if (tieneContratos)
-    {
-        TempData["Error"] = "No se puede eliminar el inquilino porque tiene contratos asociados.";
-        return RedirectToAction(nameof(Index));
-    }
-
-    _context.Inquilinos.Remove(inquilino);
-    _context.SaveChanges();
-    return RedirectToAction(nameof(Index));
-        }
     }
 }

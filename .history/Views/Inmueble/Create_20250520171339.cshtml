@@ -1,0 +1,24 @@
+@model Inmobiliaria_Benito.Models.Inmueble
+@{
+    ViewData["Title"] = "Crear Inmueble";
+}
+<h2>Crear Inmueble</h2>
+<form asp-action="Create">
+    <div class="form-group">
+        <label asp-for="Uso"></label>
+        <input asp-for="Uso" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Direccion"></label>
+        <input asp-for="Direccion" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Propietario</label>
+        <select asp-for="IdPropietario" class="form-control" asp-items="@(new SelectList((List<Propietario>)ViewData["Propietarios"], "PropietarioId", "Nombre"))"></select>
+    </div>
+    <div class="form-group">
+        <label>Tipo</label>
+        <select asp-for="IdTipo" class="form-control" asp-items="@(new SelectList((List<TipoInmueble>)ViewData["Tipos"], "TipoInmuebleId", "Nombre"))"></select>
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+</form>

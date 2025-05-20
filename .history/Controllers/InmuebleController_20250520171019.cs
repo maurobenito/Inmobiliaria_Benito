@@ -98,20 +98,22 @@ namespace Inmobiliaria_Benito.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
-{
-    var inmueble = _context.Inmuebles.Find(id);
+        {
+            var entidad = _context.Inmuebles
+                .Include(i => i.Contratos)
+                .FirstOrDefault(i => i.InmuebleId == id);
 
-    // Verifica si el inmueble tiene contratos asociados
-    var tieneContrato = _context.Contratos.Any(c => c.IdInmueble == id);
-    if (tieneContrato)
-    {
-        TempData["Error"] = "No se puede eliminar el inmueble porque está asociado a un contrato.";
-        return RedirectToAction(nameof(Index));
-    }
+            if (entidad == null) return NotFound();
 
-    _context.Inmuebles.Remove(inmueble);
-    _context.SaveChanges();
-    return RedirectToAction(nameof(Index));
-}
+            if (entidad.Contratos != null && entidad.Contratos.Any())
+            {
+                ModelState.AddModelError("", "No se puede eliminar el inmueble porque tiene contratos asociados.");
+                return View(entidad);
+            }
+
+            _context.Inmuebles.Remove(entidad);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

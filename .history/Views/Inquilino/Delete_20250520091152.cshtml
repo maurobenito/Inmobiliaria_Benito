@@ -1,7 +1,7 @@
 @model Inmobiliaria_Benito.Models.Inquilino
 @{
     ViewData["Title"] = "Eliminar Inquilino";
-    var contratos = ViewBag.Contratos as List<Inmobiliaria_Benito.Models.Contrato>;
+    var contratoss = ViewBag.Contratos as List<Inmobiliaria_Benito.Models.Contrato>;
 }
 
 <h2>Eliminar Inquilino</h2>
@@ -22,39 +22,34 @@
     <dd class="col-sm-10">@Model.Email</dd>
 </dl>
 
-@if (contratos != null && contratos.Count > 0)
+@if (contratoss != null && contratoss.Count > 0)
 {
     <div class="alert alert-warning">
         Este inquilino tiene contratos asociados y <strong>no puede ser eliminado</strong>.
     </div>
 
     <h5>Contratos asociados:</h5>
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>ID Contrato</th>
-            <th>Fecha Inicio</th>
-            <th>Fecha Fin</th>
-            <th>Inmueble (ID - Dirección)</th>
-            <th>Estado</th>
-        </tr>
-    </thead>
-    <tbody>
-    @foreach (var contrato in contratos)
-    {
-        var estado = contrato.FechaHasta >= DateOnly.FromDateTime(DateTime.Today)
-            ? "Activo"
-            : "Finalizado";
-        <tr>
-            <td>@contrato.ContratoId</td>
-            <td>@(contrato.FechaDesde?.ToString("dd/MM/yyyy"))</td>
-            <td>@(contrato.FechaHasta?.ToString("dd/MM/yyyy"))</td>
-            <td>@contrato.IdInmueble - @contrato.IdInmuebleNavigation?.Direccion</td>
-            <td>@estado</td>
-        </tr>
-    }
-    </tbody>
-</table>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Fecha Inicio</th>
+                <th>Fecha Fin</th>
+                <th>ID Inmueble</th>
+            </tr>
+        </thead>
+        <tbody>
+      @foreach (var contrato in contratoss)
+{
+    <tr>
+        <td>@contrato.ContratoId</td>
+        <td>@(contrato.FechaDesde?.ToString("dd/MM/yyyy"))</td>
+        <td>@(contrato.FechaHasta?.ToString("dd/MM/yyyy"))</td>
+        <td>@contrato.IdInmueble</td>
+    </tr>
+}
+        </tbody>
+    </table>
 
     <a asp-action="Index" class="btn btn-secondary">Volver</a>
 }

@@ -1,13 +1,12 @@
-@model Inmobiliaria_Benito.Models.Propietario
+@model Inmobiliaria_Benito.Models.Inquilino
 
 @{
-    ViewData["Title"] = "Editar Propietario";
+    ViewData["Title"] = "Agregar Inquilino";
 }
 
 <h2>@ViewData["Title"]</h2>
 
-<form asp-action="Edit">
-    <input type="hidden" asp-for="PropietarioId" />
+<form asp-action="Create">
     <div class="form-group">
         <label asp-for="Nombre"></label>
         <input asp-for="Nombre" class="form-control" />
@@ -29,6 +28,6 @@
         <input asp-for="Email" class="form-control" />
     </div>
     <br />
-    <button type="submit" class="btn btn-success">Guardar Cambios</button>
+    <button type="submit" class="btn btn-primary">Guardar</button>
     <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
 </form>

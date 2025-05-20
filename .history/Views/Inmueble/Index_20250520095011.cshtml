@@ -9,12 +9,7 @@
 <p>
     <a asp-action="Create" class="btn btn-primary">Nuevo Inmueble</a>
 </p>
-@if (TempData["Error"] != null)
-{
-    <div class="alert alert-danger">
-        @TempData["Error"]
-    </div>
-}
+
 <table class="table">
     <thead>
         <tr>

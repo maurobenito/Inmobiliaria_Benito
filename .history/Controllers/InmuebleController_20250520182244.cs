@@ -112,6 +112,21 @@ namespace Inmobiliaria_Benito.Controllers
     _context.Inmuebles.Remove(inmueble);
     _context.SaveChanges();
     return RedirectToAction(nameof(Index));
+}public IActionResult DeleteConfirmed(int id)
+{
+    var inmueble = _context.Inmuebles.Find(id);
+
+    // Verifica si el inmueble tiene contratos asociados
+    var tieneContrato = _context.Contratos.Any(c => c.IdInmueble == id);
+    if (tieneContrato)
+    {
+        TempData["Error"] = "No se puede eliminar el inmueble porque está asociado a un contrato.";
+        return RedirectToAction(nameof(Index));
+    }
+
+    _context.Inmuebles.Remove(inmueble);
+    _context.SaveChanges();
+    return RedirectToAction(nameof(Index));
 }
     }
 }

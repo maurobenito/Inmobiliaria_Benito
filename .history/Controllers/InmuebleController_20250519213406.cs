@@ -1,9 +1,7 @@
-﻿
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Inmobiliaria_Benito.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Inmobiliaria_Benito.Controllers
 {
@@ -18,10 +16,11 @@ namespace Inmobiliaria_Benito.Controllers
 
         public IActionResult Index()
         {
+            // Incluimos datos de Propietario y TipoInmueble si los usás en la lista
             var lista = _context.Inmuebles
-                .Include(i => i.IdPropietarioNavigation)
-                .Include(i => i.IdTipoNavigation)
-                .ToList();
+                        .Include(i => i.IdPropietarioNavigation)
+                        .Include(i => i.IdTipoNavigation)
+                        .ToList();
             return View(lista);
         }
 
@@ -30,18 +29,15 @@ namespace Inmobiliaria_Benito.Controllers
             var entidad = _context.Inmuebles
                 .Include(i => i.IdPropietarioNavigation)
                 .Include(i => i.IdTipoNavigation)
-                .Include(i => i.Contratos)
                 .FirstOrDefault(i => i.InmuebleId == id);
-
             if (entidad == null) return NotFound();
-
             return View(entidad);
         }
 
         public IActionResult Create()
         {
-            ViewData["Propietarios"] = new SelectList(_context.Propietarios, "PropietarioId", "NombreCompleto");
-            ViewData["Tipos"] = new SelectList(_context.TipoInmuebles, "TipoId", "Nombre");
+            ViewData["Propietarios"] = _context.Propietarios.ToList();
+            ViewData["Tipos"] = _context.TipoInmuebles.ToList();
             return View();
         }
 
@@ -51,8 +47,8 @@ namespace Inmobiliaria_Benito.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ViewData["Propietarios"] = new SelectList(_context.Propietarios, "PropietarioId", "NombreCompleto");
-                ViewData["Tipos"] = new SelectList(_context.TipoInmuebles, "TipoId", "Nombre");
+                ViewData["Propietarios"] = _context.Propietarios.ToList();
+                ViewData["Tipos"] = _context.TipoInmuebles.ToList();
                 return View(inmueble);
             }
             _context.Inmuebles.Add(inmueble);
@@ -65,8 +61,8 @@ namespace Inmobiliaria_Benito.Controllers
             var entidad = _context.Inmuebles.Find(id);
             if (entidad == null) return NotFound();
 
-            ViewData["Propietarios"] = new SelectList(_context.Propietarios, "PropietarioId", "NombreCompleto", entidad.IdPropietario);
-            ViewData["Tipos"] = new SelectList(_context.TipoInmuebles, "TipoId", "Nombre", entidad.IdTipo);
+            ViewData["Propietarios"] = _context.Propietarios.ToList();
+            ViewData["Tipos"] = _context.TipoInmuebles.ToList();
             return View(entidad);
         }
 
@@ -76,8 +72,8 @@ namespace Inmobiliaria_Benito.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ViewData["Propietarios"] = new SelectList(_context.Propietarios, "PropietarioId", "NombreCompleto", inmueble.IdPropietario);
-                ViewData["Tipos"] = new SelectList(_context.TipoInmuebles, "TipoId", "Nombre", inmueble.IdTipo);
+                ViewData["Propietarios"] = _context.Propietarios.ToList();
+                ViewData["Tipos"] = _context.TipoInmuebles.ToList();
                 return View(inmueble);
             }
             _context.Inmuebles.Update(inmueble);
@@ -98,20 +94,12 @@ namespace Inmobiliaria_Benito.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
-{
-    var inmueble = _context.Inmuebles.Find(id);
-
-    // Verifica si el inmueble tiene contratos asociados
-    var tieneContrato = _context.Contratos.Any(c => c.IdInmueble == id);
-    if (tieneContrato)
-    {
-        TempData["Error"] = "No se puede eliminar el inmueble porque está asociado a un contrato.";
-        return RedirectToAction(nameof(Index));
-    }
-
-    _context.Inmuebles.Remove(inmueble);
-    _context.SaveChanges();
-    return RedirectToAction(nameof(Index));
-}
+        {
+            var entidad = _context.Inmuebles.Find(id);
+            if (entidad == null) return NotFound();
+            _context.Inmuebles.Remove(entidad);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

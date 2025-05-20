@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Inmobiliaria_Benito.Models;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
-
 
 namespace Inmobiliaria_Benito.Controllers
 {
@@ -68,24 +66,20 @@ namespace Inmobiliaria_Benito.Controllers
 
         // GET: /Inquilino/Delete/5
     // GET: /Inquilino/Delete/5
-
-
 public IActionResult Delete(int id)
 {
     var entidad = _context.Inquilinos.Find(id);
     if (entidad == null) return NotFound();
 
-    // Trae los contratos asociados, incluyendo los datos del inmueble
+    // Obtener los contratos asociados al inquilino
     var contratos = _context.Contratos
         .Where(c => c.IdInquilino == id)
-        .Include(c => c.IdInmuebleNavigation)
         .ToList();
 
     ViewBag.Contratos = contratos;
 
     return View(entidad);
 }
-
 
 
         // POST: /Inquilino/Delete/5

@@ -1,0 +1,50 @@
+@model Inmobiliaria_Benito.Models.Contrato
+
+@{
+    ViewData["Title"] = "Nuevo Contrato";
+    var inquilinos = ViewData["Inquilinos"] as List<Inquilino>;
+    var inmuebles = ViewData["Inmuebles"] as List<Inmueble>;
+}
+
+<h2>Nuevo Contrato</h2>
+
+<form asp-action="Create">
+    <div class="form-group">
+        <label asp-for="IdInquilino" class="control-label">Inquilino</label>
+        <select asp-for="IdInquilino" class="form-control"
+                asp-items="new SelectList(inquilinos, nameof(Inquilino.IdInquilino), nameof(Inquilino.Nombre))">
+            <option value="">Seleccione un inquilino</option>
+        </select>
+        <span asp-validation-for="IdInquilino" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="IdInmueble" class="control-label">Inmueble</label>
+        <select asp-for="IdInmueble" class="form-control"
+                asp-items="new SelectList(inmuebles, nameof(Inmueble.IdInmueble), nameof(Inmueble.Direccion))">
+            <option value="">Seleccione un inmueble</option>
+        </select>
+        <span asp-validation-for="IdInmueble" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="FechaDesde" class="control-label"></label>
+        <input asp-for="FechaDesde" class="form-control" type="date" />
+        <span asp-validation-for="FechaDesde" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="FechaHasta" class="control-label"></label>
+        <input asp-for="FechaHasta" class="form-control" type="date" />
+        <span asp-validation-for="FechaHasta" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Monto" class="control-label"></label>
+        <input asp-for="Monto" class="form-control" />
+        <span asp-validation-for="Monto" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>
