@@ -34,28 +34,20 @@ namespace Inmobiliaria_Benito.Controllers
             return View(contrato);
         }
 
-        // GET: Contrato/Create
         public IActionResult Create()
         {
             var viewModel = new ContratoViewModel
             {
                 Contrato = new Contrato(),
-                Inquilinos = _context.Inquilinos.Select(i => new SelectListItem
-                {
-                    Value = i.InquilinoId.ToString(),
-                    Text = i.Nombre + " " + i.Apellido
-                }),
-                Inmuebles = _context.Inmuebles.Select(i => new SelectListItem
-                {
-                    Value = i.InmuebleId.ToString(),
-                    Text = i.Direccion
-                })
+                Inquilinos = _context.Inquilinos
+                              .Select(i => new SelectListItem { Value = i.InquilinoId.ToString(), Text = i.Nombre + " " + i.Apellido })
+                              .ToList(),
+                Inmuebles = _context.Inmuebles
+                              .Select(i => new SelectListItem { Value = i.InmuebleId.ToString(), Text = i.Direccion })
+                              .ToList()
             };
-
             return View(viewModel);
         }
-
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -79,7 +71,7 @@ namespace Inmobiliaria_Benito.Controllers
             if (ocupado)
             {
                 TempData["Error"] = "Este inmueble ya tiene un contrato vigente en ese período.";
-                model.Inquilinos = _context.Inquilinos.Select(i => new SelectListItem { Value = i.InquilinoId.ToString(), Text = i.Nombre + " " + i.Apellido });
+                 model.Inquilinos = _context.Inquilinos.Select(i => new SelectListItem { Value = i.InquilinoId.ToString(), Text = i.Nombre + " " + i.Apellido });
                 model.Inmuebles = _context.Inmuebles.Select(i => new SelectListItem { Value = i.InmuebleId.ToString(), Text = i.Direccion });
                 return View(model);
             }
@@ -123,7 +115,7 @@ namespace Inmobiliaria_Benito.Controllers
                 model.Inquilinos = _context.Inquilinos.Select(i => new SelectListItem { Value = i.InquilinoId.ToString(), Text = i.Nombre + " " + i.Apellido });
                 model.Inmuebles = _context.Inmuebles.Select(i => new SelectListItem { Value = i.InmuebleId.ToString(), Text = i.Direccion });
                 return View(model);
-
+            
             }
 
             _context.Contratos.Update(model.Contrato);

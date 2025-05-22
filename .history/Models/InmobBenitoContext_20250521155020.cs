@@ -161,7 +161,7 @@ public partial class InmobBenitoContext : DbContext
                 .HasColumnName("numero_pago");
 
             entity.HasOne(d => d.IdContratoNavigation).WithMany(p => p.Pagos)
-                .HasForeignKey(d => d.ContratoId)
+                .HasForeignKey(d => d.IdContrato)
                 .HasConstraintName("pago_ibfk_1");
         });
 

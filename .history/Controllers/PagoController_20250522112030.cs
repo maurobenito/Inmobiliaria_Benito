@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering; // Para SelectList
 using Microsoft.EntityFrameworkCore; // Para Include, ToList, FirstOrDefault
 using Inmobiliaria_Benito.Models;
 
+
 namespace Inmobiliaria_Benito.Controllers
 {
     public class PagoController : Controller

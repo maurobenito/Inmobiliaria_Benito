@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering; // Para SelectList
-using Microsoft.EntityFrameworkCore; // Para Include, ToList, FirstOrDefault
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Inmobiliaria_Benito.Models;
 
 namespace Inmobiliaria_Benito.Controllers

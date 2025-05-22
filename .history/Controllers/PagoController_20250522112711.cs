@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering; // Para SelectList
 using Microsoft.EntityFrameworkCore; // Para Include, ToList, FirstOrDefault
 using Inmobiliaria_Benito.Models;
 
+
 namespace Inmobiliaria_Benito.Controllers
 {
     public class PagoController : Controller
@@ -18,11 +19,17 @@ namespace Inmobiliaria_Benito.Controllers
         }
 
         // GET: Pago
-        public IActionResult Index()
-        {
-            var lista = _context.Pagos.Include(p => p.IdContratoNavigation).ToList();
-            return View(lista);
-        }
+    public IActionResult Index()
+{
+    var lista = _context.Pagos
+        .Include(p => p.IdContratoNavigation)
+            .ThenInclude(c => c.IdInquilinoNavigation)
+        .Include(p => p.IdContratoNavigation)
+            .ThenInclude(c => c.IdInmuebleNavigation)
+        .ToList();
+
+    return View(lista); // ✅ Aquí se devuelve una lista de Pago
+}
 
         // GET: Pago/Details/5
         public IActionResult Details(int id)

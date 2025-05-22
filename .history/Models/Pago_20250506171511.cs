@@ -7,7 +7,7 @@ public partial class Pago
 {
     public int PagoId { get; set; }
 
-    public int? ContratoId { get; set; }
+    public int? IdContrato { get; set; }
 
     public int? NumeroPago { get; set; }
 

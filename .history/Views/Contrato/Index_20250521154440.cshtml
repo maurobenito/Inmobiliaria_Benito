@@ -1,0 +1,36 @@
+@model IEnumerable<Inmobiliaria_Benito.Models.Pago>
+
+@{
+    ViewData["Title"] = "Pagos";
+}
+
+<h1>Listado de Pagos</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Nuevo Pago</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Contrato</th>
+            <th>Fecha</th>
+            <th>Importe</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+    <tr>
+        <td>@item.ContratoId</td>
+        <td>@item.FechaPago.ToShortDateString()</td>
+        <td>$@item.Importe</td>
+        <td>
+            <a asp-action="Details" asp-route-id="@item.PagoId">Detalles</a> |
+            <a asp-action="Edit" asp-route-id="@item.PagoId">Editar</a> |
+            <a asp-action="Delete" asp-route-id="@item.PagoId">Eliminar</a>
+        </td>
+    </tr>
+}
+    </tbody>
+</table>
