@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering; // Para SelectList
+using Microsoft.EntityFrameworkCore; // Para Include, ToList, FirstOrDefault
 using Inmobiliaria_Benito.Models;
 
 public class PagoController : Controller
@@ -20,10 +20,7 @@ public class PagoController : Controller
     {
         var lista = _context.Pagos
             .Include(p => p.IdContratoNavigation)
-            .ThenInclude(c => c.IdInquilinoNavigation)
-            .Include(p => p.IdContratoNavigation.IdInmuebleNavigation)
             .ToList();
-
         return View(lista);
     }
 
@@ -32,8 +29,6 @@ public class PagoController : Controller
     {
         var pago = _context.Pagos
             .Include(p => p.IdContratoNavigation)
-            .ThenInclude(c => c.IdInquilinoNavigation)
-            .Include(p => p.IdContratoNavigation.IdInmuebleNavigation)
             .FirstOrDefault(p => p.PagoId == id);
 
         if (pago == null)
@@ -45,21 +40,7 @@ public class PagoController : Controller
     // GET: Pago/Create
     public IActionResult Create()
     {
-        var contratos = _context.Contratos
-            .Include(c => c.IdInquilinoNavigation)
-            .Include(c => c.IdInmuebleNavigation)
-            .ToList();
-
-        ViewBag.ContratoId = _context.Contratos
-    .Include(c => c.IdInquilinoNavigation)
-    .Include(c => c.IdInmuebleNavigation)
-    .Select(c => new SelectListItem
-    {
-        Value = c.ContratoId.ToString(),
-        Text = c.IdInquilinoNavigation.Nombre + " - " + c.IdInmuebleNavigation.Direccion + " - $" + c.Monto
-    })
-    .ToList();
-
+        ViewBag.ContratoId = new SelectList(_context.Contratos, "ContratoId", "ContratoId");
         return View();
     }
 
@@ -75,21 +56,7 @@ public class PagoController : Controller
             return RedirectToAction(nameof(Index));
         }
 
-        var contratos = _context.Contratos
-            .Include(c => c.IdInquilinoNavigation)
-            .Include(c => c.IdInmuebleNavigation)
-            .ToList();
-
-        ViewBag.ContratoId = _context.Contratos
-    .Include(c => c.IdInquilinoNavigation)
-    .Include(c => c.IdInmuebleNavigation)
-    .Select(c => new SelectListItem
-    {
-        Value = c.ContratoId.ToString(),
-        Text = c.IdInquilinoNavigation.Nombre + " - " + c.IdInmuebleNavigation.Direccion + " - $" + c.Monto
-    })
-    .ToList();
-
+        ViewBag.ContratoId = new SelectList(_context.Contratos, "ContratoId", "ContratoId", pago.ContratoId);
         return View(pago);
     }
 
@@ -100,21 +67,7 @@ public class PagoController : Controller
         if (pago == null)
             return NotFound();
 
-        var contratos = _context.Contratos
-            .Include(c => c.IdInquilinoNavigation)
-            .Include(c => c.IdInmuebleNavigation)
-            .ToList();
-
-        ViewBag.ContratoId = _context.Contratos
-    .Include(c => c.IdInquilinoNavigation)
-    .Include(c => c.IdInmuebleNavigation)
-    .Select(c => new SelectListItem
-    {
-        Value = c.ContratoId.ToString(),
-        Text = c.IdInquilinoNavigation.Nombre + " - " + c.IdInmuebleNavigation.Direccion + " - $" + c.Monto
-    })
-    .ToList();
-
+        ViewBag.ContratoId = new SelectList(_context.Contratos, "ContratoId", "ContratoId", pago.ContratoId);
         return View(pago);
     }
 
@@ -133,20 +86,7 @@ public class PagoController : Controller
             return RedirectToAction(nameof(Index));
         }
 
-        var contratos = _context.Contratos
-            .Include(c => c.IdInquilinoNavigation)
-            .Include(c => c.IdInmuebleNavigation)
-            .ToList();
-
-ViewBag.ContratoId = _context.Contratos
-    .Include(c => c.IdInquilinoNavigation)
-    .Include(c => c.IdInmuebleNavigation)
-    .Select(c => new SelectListItem
-    {
-        Value = c.ContratoId.ToString(),
-        Text = c.IdInquilinoNavigation.Nombre + " - " + c.IdInmuebleNavigation.Direccion + " - $" + c.Monto
-    })
-    .ToList();
+        ViewBag.ContratoId = new SelectList(_context.Contratos, "ContratoId", "ContratoId", pago.ContratoId);
         return View(pago);
     }
 
@@ -155,8 +95,6 @@ ViewBag.ContratoId = _context.Contratos
     {
         var pago = _context.Pagos
             .Include(p => p.IdContratoNavigation)
-            .ThenInclude(c => c.IdInquilinoNavigation)
-            .Include(p => p.IdContratoNavigation.IdInmuebleNavigation)
             .FirstOrDefault(p => p.PagoId == id);
 
         if (pago == null)

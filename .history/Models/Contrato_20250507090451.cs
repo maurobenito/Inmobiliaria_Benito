@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+using Inmobiliaria_Benito.Models;
 
 namespace Inmobiliaria_Benito.Models;
 
@@ -23,7 +23,4 @@ public partial class Contrato
     public virtual Inquilino IdInquilinoNavigation { get; set; }
 
     public virtual ICollection<Pago> Pagos { get; set; } = new List<Pago>();
-
-    [NotMapped]
-    public string Descripcion => $"{ContratoId} - {IdInquilinoNavigation?.Nombre} - {IdInmuebleNavigation?.Direccion}";
 }

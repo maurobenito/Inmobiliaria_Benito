@@ -50,16 +50,7 @@ public class PagoController : Controller
             .Include(c => c.IdInmuebleNavigation)
             .ToList();
 
-        ViewBag.ContratoId = _context.Contratos
-    .Include(c => c.IdInquilinoNavigation)
-    .Include(c => c.IdInmuebleNavigation)
-    .Select(c => new SelectListItem
-    {
-        Value = c.ContratoId.ToString(),
-        Text = c.IdInquilinoNavigation.Nombre + " - " + c.IdInmuebleNavigation.Direccion + " - $" + c.Monto
-    })
-    .ToList();
-
+        ViewBag.ContratoId = new SelectList(contratos, "ContratoId", "Descripcion");
         return View();
     }
 
@@ -80,16 +71,7 @@ public class PagoController : Controller
             .Include(c => c.IdInmuebleNavigation)
             .ToList();
 
-        ViewBag.ContratoId = _context.Contratos
-    .Include(c => c.IdInquilinoNavigation)
-    .Include(c => c.IdInmuebleNavigation)
-    .Select(c => new SelectListItem
-    {
-        Value = c.ContratoId.ToString(),
-        Text = c.IdInquilinoNavigation.Nombre + " - " + c.IdInmuebleNavigation.Direccion + " - $" + c.Monto
-    })
-    .ToList();
-
+        ViewBag.ContratoId = new SelectList(contratos, "ContratoId", "Descripcion", pago.ContratoId);
         return View(pago);
     }
 
@@ -105,16 +87,7 @@ public class PagoController : Controller
             .Include(c => c.IdInmuebleNavigation)
             .ToList();
 
-        ViewBag.ContratoId = _context.Contratos
-    .Include(c => c.IdInquilinoNavigation)
-    .Include(c => c.IdInmuebleNavigation)
-    .Select(c => new SelectListItem
-    {
-        Value = c.ContratoId.ToString(),
-        Text = c.IdInquilinoNavigation.Nombre + " - " + c.IdInmuebleNavigation.Direccion + " - $" + c.Monto
-    })
-    .ToList();
-
+        ViewBag.ContratoId = new SelectList(contratos, "ContratoId", "Descripcion", pago.ContratoId);
         return View(pago);
     }
 
@@ -138,15 +111,7 @@ public class PagoController : Controller
             .Include(c => c.IdInmuebleNavigation)
             .ToList();
 
-ViewBag.ContratoId = _context.Contratos
-    .Include(c => c.IdInquilinoNavigation)
-    .Include(c => c.IdInmuebleNavigation)
-    .Select(c => new SelectListItem
-    {
-        Value = c.ContratoId.ToString(),
-        Text = c.IdInquilinoNavigation.Nombre + " - " + c.IdInmuebleNavigation.Direccion + " - $" + c.Monto
-    })
-    .ToList();
+        ViewBag.ContratoId = new SelectList(contratos, "ContratoId", "Descripcion", pago.ContratoId);
         return View(pago);
     }
 
