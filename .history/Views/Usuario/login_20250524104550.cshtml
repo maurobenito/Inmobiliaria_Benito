@@ -1,0 +1,22 @@
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h2>Iniciar sesión</h2>
+
+<form asp-action="Login" method="post">
+    <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+<input type="email" class="form-control" name="email" required autocomplete="username" />
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">Contraseña</label>
+<input type="password" class="form-control" name="password" required autocomplete="current-password" />
+    </div>
+    <button type="submit" class="btn btn-primary">Ingresar</button>
+</form>
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="text-danger mt-2">Usuario o contraseña incorrectos.</div>
+}

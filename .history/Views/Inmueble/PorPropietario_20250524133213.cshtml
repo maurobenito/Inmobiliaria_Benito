@@ -1,0 +1,22 @@
+@model List<Inmobiliaria_Benito.Models.Inmueble>
+
+<h2>Inmuebles del Propietario</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Dirección</th>
+            <th>Uso</th>
+            <th>Estado</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Direccion</td>
+                <td>@item.Uso</td>
+                <td>@item.Estado</td>
+            </tr>
+        }
+    </tbody>
+</table>

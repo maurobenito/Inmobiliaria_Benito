@@ -1,0 +1,24 @@
+@model List<Inmobiliaria_Benito.Models.Inmueble>
+
+<h2>Inmuebles del Propietario</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Dirección</th>
+            <th>Uso</th>
+            <th>Estado</th>
+            <th>Propietario</th> <!-- ← este va en el encabezado -->
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Direccion</td>
+                <td>@item.Uso</td>
+                <td>@item.Estado</td>
+                <td>@item.IdPropietarioNavigation?.Nombre @item.IdPropietarioNavigation?.Apellido</td> <!-- ← este en la fila -->
+            </tr>
+        }
+    </tbody>
+</table>

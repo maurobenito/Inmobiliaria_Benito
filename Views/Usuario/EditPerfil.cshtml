@@ -1,0 +1,31 @@
+@model Inmobiliaria_Benito.Models.Usuario
+@{
+    ViewData["Title"] = "Editar Perfil";
+}
+
+<h2>Editar Perfil</h2>
+
+<form asp-action="EditPerfil" method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="UsuarioId" />
+    <div class="mb-3">
+        <label asp-for="Nombre" class="form-label"></label>
+        <input asp-for="Nombre" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Apellido" class="form-label"></label>
+        <input asp-for="Apellido" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label"></label>
+        <input asp-for="Email" class="form-control" type="email" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Clave" class="form-label">Nueva Contraseña (opcional)</label>
+        <input asp-for="Clave" class="form-control" type="password" autocomplete="new-password" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Foto de Perfil (opcional)</label>
+        <input type="file" name="FotoPerfilFile" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+</form>
