@@ -209,7 +209,6 @@ public class PagoController : Controller
         return View(pagos);
     }
   [HttpPost]
-[HttpPost]
 public IActionResult CrearPagoDesdeContrato(int IdContrato, DateTime Fecha, decimal Monto)
 {
     var contrato = _context.Contratos.FirstOrDefault(c => c.ContratoId == IdContrato);
@@ -228,18 +227,11 @@ public IActionResult CrearPagoDesdeContrato(int IdContrato, DateTime Fecha, deci
     _context.Pagos.Add(nuevoPago);
     _context.SaveChanges();
 
-    // Cargar lista actualizada de pagos
-    var pagos = _context.Pagos
-        .Where(p => p.ContratoId == IdContrato)
-        .OrderBy(p => p.FechaPago)
-        .ToList();
+    // Mensaje que se verá en la vista siguiente
+    TempData["Mensaje"] = "✅ El pago se registró exitosamente.";
 
-    ViewBag.Mensaje = "✅ El pago se registró exitosamente.";
-    ViewBag.IdContrato = IdContrato;
-
-    return View("PorContrato", pagos); // devolvemos la misma vista, sin redireccionar
+    return RedirectToAction("PorContrato", new { idContrato = IdContrato });
 }
-
 
 
 

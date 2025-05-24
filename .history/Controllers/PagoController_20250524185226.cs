@@ -208,13 +208,13 @@ public class PagoController : Controller
 
         return View(pagos);
     }
-  [HttpPost]
-[HttpPost]
-public IActionResult CrearPagoDesdeContrato(int IdContrato, DateTime Fecha, decimal Monto)
+    [HttpPost]
+    public IActionResult CrearPagoDesdeContrato(int IdContrato, DateTime Fecha, decimal Monto)
 {
     var contrato = _context.Contratos.FirstOrDefault(c => c.ContratoId == IdContrato);
     if (contrato == null)
     {
+        // El contrato no existe → error de validación o redirigir con mensaje
         return NotFound("El contrato especificado no existe.");
     }
 
@@ -228,19 +228,8 @@ public IActionResult CrearPagoDesdeContrato(int IdContrato, DateTime Fecha, deci
     _context.Pagos.Add(nuevoPago);
     _context.SaveChanges();
 
-    // Cargar lista actualizada de pagos
-    var pagos = _context.Pagos
-        .Where(p => p.ContratoId == IdContrato)
-        .OrderBy(p => p.FechaPago)
-        .ToList();
-
-    ViewBag.Mensaje = "✅ El pago se registró exitosamente.";
-    ViewBag.IdContrato = IdContrato;
-
-    return View("PorContrato", pagos); // devolvemos la misma vista, sin redireccionar
+    return RedirectToAction("PorContrato", new { idContrato = IdContrato });
 }
-
-
 
 
 }

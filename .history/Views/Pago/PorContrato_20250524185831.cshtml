@@ -3,9 +3,11 @@
     ViewData["Title"] = "Pagos del Contrato";
     var contrato = ViewBag.DatosContrato as Inmobiliaria_Benito.Models.Contrato;
 }
-@if (ViewBag.Mensaje != null)
+@if (TempData["Mensaje"] != null)
 {
-    <div class="alert alert-success">@ViewBag.Mensaje</div>
+    <div class="alert alert-success">
+        @TempData["Mensaje"]
+    </div>
 }
 
 <h2>Pagos del Contrato</h2>

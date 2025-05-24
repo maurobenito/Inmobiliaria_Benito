@@ -208,39 +208,22 @@ public class PagoController : Controller
 
         return View(pagos);
     }
-  [HttpPost]
-[HttpPost]
-public IActionResult CrearPagoDesdeContrato(int IdContrato, DateTime Fecha, decimal Monto)
-{
-    var contrato = _context.Contratos.FirstOrDefault(c => c.ContratoId == IdContrato);
-    if (contrato == null)
+    [HttpPost]
+    public IActionResult CrearPagoDesdeContrato(int IdContrato, DateTime Fecha, decimal Monto)
     {
-        return NotFound("El contrato especificado no existe.");
+        var nuevoPago = new Pago
+        {
+            ContratoId = IdContrato,
+            FechaPago = DateOnly.FromDateTime(Fecha),
+            Importe = Monto
+        };
+
+        _context.Pagos.Add(nuevoPago);
+        _context.SaveChanges();
+
+        // Redirige nuevamente a la vista PorContrato
+        return RedirectToAction("PorContrato", new { idContrato = IdContrato });
+
     }
-
-    var nuevoPago = new Pago
-    {
-        ContratoId = IdContrato,
-        FechaPago = DateOnly.FromDateTime(Fecha),
-        Importe = Monto
-    };
-
-    _context.Pagos.Add(nuevoPago);
-    _context.SaveChanges();
-
-    // Cargar lista actualizada de pagos
-    var pagos = _context.Pagos
-        .Where(p => p.ContratoId == IdContrato)
-        .OrderBy(p => p.FechaPago)
-        .ToList();
-
-    ViewBag.Mensaje = "✅ El pago se registró exitosamente.";
-    ViewBag.IdContrato = IdContrato;
-
-    return View("PorContrato", pagos); // devolvemos la misma vista, sin redireccionar
-}
-
-
-
 
 }
