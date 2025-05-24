@@ -1,0 +1,25 @@
+@model List<Contrato>
+
+<h2>Contratos Vigentes</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Inquilino</th>
+            <th>Inmueble</th>
+            <th>Desde</th>
+            <th>Hasta</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var c in Model)
+    {
+        <tr>
+            <td>@c.IdInquilinoNavigation.Nombre</td>
+            <td>@c.IdInmuebleNavigation.Direccion</td>
+            <td>@c.FechaDesde.ToShortDateString()</td>
+            <td>@c.FechaHasta.ToShortDateString()</td>
+        </tr>
+    }
+    </tbody>
+</table>

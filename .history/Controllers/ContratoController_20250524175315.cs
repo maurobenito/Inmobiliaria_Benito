@@ -180,18 +180,6 @@ public IActionResult ContratosVigentes()
 
     return View(contratos);
 }
-public IActionResult PorInmueble(int id)
-{
-    var contratos = _context.Contratos
-        .Include(c => c.IdInquilinoNavigation)
-        .Include(c => c.IdInmuebleNavigation)
-        .Where(c => c.IdInmueble == id)
-        .ToList();
-
-    ViewBag.Direccion = _context.Inmuebles.FirstOrDefault(i => i.InmuebleId == id)?.Direccion;
-
-    return View(contratos);
-}
 
 
     }

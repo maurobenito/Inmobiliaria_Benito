@@ -1,0 +1,22 @@
+@model IEnumerable<Inmobiliaria_Benito.Models.Pago>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Fecha de Pago</th>
+            <th>Importe</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var pago in Model)
+        {
+            <tr>
+                <td>@pago.FechaPago?.ToString("dd/MM/yyyy")</td>
+                <td>@pago.Importe?.ToString("C")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<a asp-action="Index" class="btn btn-secondary">Volver</a>

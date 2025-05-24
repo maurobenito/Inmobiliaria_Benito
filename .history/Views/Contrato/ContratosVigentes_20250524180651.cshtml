@@ -1,0 +1,34 @@
+@model List<Inmobiliaria_Benito.Models.Contrato>
+@{
+    ViewData["Title"] = "Contratos Vigentes";
+}
+
+<h2>Contratos de alquiler vigentes</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Inquilino</th>
+            <th>Inmueble</th>
+            <th>Fecha Desde</th>
+            <th>Fecha Hasta</th>
+            <th>Monto</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.IdInquilinoNavigation?.Nombre @item.IdInquilinoNavigation?.Apellido</td>
+                <td>@item.IdInmuebleNavigation?.Direccion</td>
+                <td>@(item.FechaDesde.HasValue ? item.FechaDesde.Value.ToString("dd/MM/yyyy") : "")</td>
+                <td>@(item.FechaHasta.HasValue ? item.FechaHasta.Value.ToString("dd/MM/yyyy") : "")</td>
+                <td>@(item.Monto.HasValue ? item.Monto.Value.ToString("C") : "")
+
+                    <a asp-action="Details" asp-route-id="@item.ContratoId">Detalles</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
