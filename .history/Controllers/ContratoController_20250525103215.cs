@@ -232,45 +232,13 @@ public IActionResult PorInmueble(int id)
     var viewModel = new ContratoViewModel
     {
         Contrato = nuevoContrato,
-        Inquilinos = _context.Inquilinos.Select(i => new SelectListItem
-        {
-            Value = i.InquilinoId.ToString(),
-            Text = i.Nombre
-        }),
-        Inmuebles = _context.Inmuebles.Select(i => new SelectListItem
-        {
-            Value = i.InmuebleId.ToString(),
-            Text = i.Direccion
-        })
+        Inquilinos = _context.Inquilinos
+            .Select(i => new SelectListItem { Value = i.InquilinoId.ToString(), Text = i.Nombre }),
+        Inmuebles = _context.Inmuebles
+            .Select(i => new SelectListItem { Value = i.InmuebleId.ToString(), Text = i.Direccion })
     };
 
-    return View("Renovar", viewModel);
-}
-[HttpPost]
-[ValidateAntiForgeryToken]
-public IActionResult Renovar(ContratoViewModel model)
-{
-    if (!ModelState.IsValid)
-    {
-        model.Inquilinos = _context.Inquilinos.Select(i => new SelectListItem
-        {
-            Value = i.InquilinoId.ToString(),
-            Text = i.Nombre
-        });
-
-        model.Inmuebles = _context.Inmuebles.Select(i => new SelectListItem
-        {
-            Value = i.InmuebleId.ToString(),
-            Text = i.Direccion
-        });
-
-        return View("Renovar", model);
-    }
-
-    _context.Contratos.Add(model.Contrato);
-    _context.SaveChanges();
-
-    return RedirectToAction("Index");
+    return View("Create", viewModel); // 👈 Reutiliza la vista Create.cshtml
 }
 
 public IActionResult Rescindir(int id)

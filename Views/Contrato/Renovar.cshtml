@@ -1,0 +1,37 @@
+@model Inmobiliaria_Benito.Models.ContratoViewModel
+
+@{
+    ViewData["Title"] = "Renovar Contrato";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="Renovar" method="post">
+    <div class="form-group">
+        <label asp-for="Contrato.IdInquilino" class="control-label"></label>
+        <select asp-for="Contrato.IdInquilino" asp-items="Model.Inquilinos" class="form-control"></select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Contrato.IdInmueble" class="control-label"></label>
+        <select asp-for="Contrato.IdInmueble" asp-items="Model.Inmuebles" class="form-control"></select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Contrato.FechaDesde" class="control-label"></label>
+        <input asp-for="Contrato.FechaDesde" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Contrato.FechaHasta" class="control-label"></label>
+        <input asp-for="Contrato.FechaHasta" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Contrato.Monto" class="control-label"></label>
+        <input asp-for="Contrato.Monto" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-success">Guardar Renovación</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

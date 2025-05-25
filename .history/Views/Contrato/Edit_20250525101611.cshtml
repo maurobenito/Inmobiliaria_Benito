@@ -37,7 +37,7 @@
         <label asp-for="Contrato.Monto"></label>
         <input asp-for="Contrato.Monto" class="form-control" />
     </div>
-   
+    <a asp-action="Renovar" asp-route-id="@Model.Contrato.ContratoId" class="btn btn-success ml-2">Renovar Contrato</a>
     <button type="submit" class="btn btn-primary">Guardar</button>
     <a asp-action="Index" class="btn btn-secondary">Volver</a>
 </form>

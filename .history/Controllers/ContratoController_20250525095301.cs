@@ -208,7 +208,8 @@ public IActionResult PorInmueble(int id)
     ViewBag.Direccion = _context.Inmuebles.FirstOrDefault(i => i.InmuebleId == id)?.Direccion;
 
     return View(contratos);
-}public IActionResult Renovar(int id)
+}
+public IActionResult Renovar(int id)
 {
     var original = _context.Contratos
         .Include(c => c.IdInmuebleNavigation)
@@ -223,80 +224,16 @@ public IActionResult PorInmueble(int id)
         IdInquilino = original.IdInquilino,
         IdInmueble = original.IdInmueble,
         FechaDesde = original.FechaHasta?.AddDays(1),
-        FechaHasta = original.FechaHasta?.AddMonths(12),
+        FechaHasta = original.FechaHasta?.AddMonths(12), // Por ejemplo, un año más
         Monto = original.Monto,
         MultaPorRescision = null,
         RescindidoAnticipadamente = false
     };
 
-    var viewModel = new ContratoViewModel
-    {
-        Contrato = nuevoContrato,
-        Inquilinos = _context.Inquilinos.Select(i => new SelectListItem
-        {
-            Value = i.InquilinoId.ToString(),
-            Text = i.Nombre
-        }),
-        Inmuebles = _context.Inmuebles.Select(i => new SelectListItem
-        {
-            Value = i.InmuebleId.ToString(),
-            Text = i.Direccion
-        })
-    };
+    ViewData["IdInquilino"] = new SelectList(_context.Inquilinos, "InquilinoId", "Nombre", nuevoContrato.IdInquilino);
+    ViewData["IdInmueble"] = new SelectList(_context.Inmuebles, "InmuebleId", "Direccion", nuevoContrato.IdInmueble);
 
-    return View("Renovar", viewModel);
-}
-[HttpPost]
-[ValidateAntiForgeryToken]
-public IActionResult Renovar(ContratoViewModel model)
-{
-    if (!ModelState.IsValid)
-    {
-        model.Inquilinos = _context.Inquilinos.Select(i => new SelectListItem
-        {
-            Value = i.InquilinoId.ToString(),
-            Text = i.Nombre
-        });
-
-        model.Inmuebles = _context.Inmuebles.Select(i => new SelectListItem
-        {
-            Value = i.InmuebleId.ToString(),
-            Text = i.Direccion
-        });
-
-        return View("Renovar", model);
-    }
-
-    _context.Contratos.Add(model.Contrato);
-    _context.SaveChanges();
-
-    return RedirectToAction("Index");
-}
-
-public IActionResult Rescindir(int id)
-{
-    var contrato = _context.Contratos.Find(id);
-    if (contrato == null) return NotFound();
-
-    return View(contrato);
-}
-
-[HttpPost]
-[ValidateAntiForgeryToken]
-public IActionResult Rescindir(int id, decimal multa)
-{
-    var contrato = _context.Contratos.Find(id);
-    if (contrato == null) return NotFound();
-
-    contrato.RescindidoAnticipadamente = true;
-    contrato.MultaPorRescision = multa;
-    contrato.FechaHasta = DateOnly.FromDateTime(DateTime.Today); // Fin anticipado hoy
-
-    _context.Update(contrato);
-    _context.SaveChanges();
-
-    // Redirige a una vista que liste contratos o pagos
-    return RedirectToAction("Index");
+    return View("Create", nuevoContrato); // Reutilizás la vista Create
 }
 
 

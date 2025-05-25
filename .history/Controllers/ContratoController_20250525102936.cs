@@ -208,7 +208,8 @@ public IActionResult PorInmueble(int id)
     ViewBag.Direccion = _context.Inmuebles.FirstOrDefault(i => i.InmuebleId == id)?.Direccion;
 
     return View(contratos);
-}public IActionResult Renovar(int id)
+}
+public IActionResult Renovar(int id)
 {
     var original = _context.Contratos
         .Include(c => c.IdInmuebleNavigation)
@@ -223,54 +224,16 @@ public IActionResult PorInmueble(int id)
         IdInquilino = original.IdInquilino,
         IdInmueble = original.IdInmueble,
         FechaDesde = original.FechaHasta?.AddDays(1),
-        FechaHasta = original.FechaHasta?.AddMonths(12),
+        FechaHasta = original.FechaHasta?.AddMonths(12), // Renovación por 1 año
         Monto = original.Monto,
         MultaPorRescision = null,
         RescindidoAnticipadamente = false
     };
 
-    var viewModel = new ContratoViewModel
-    {
-        Contrato = nuevoContrato,
-        Inquilinos = _context.Inquilinos.Select(i => new SelectListItem
-        {
-            Value = i.InquilinoId.ToString(),
-            Text = i.Nombre
-        }),
-        Inmuebles = _context.Inmuebles.Select(i => new SelectListItem
-        {
-            Value = i.InmuebleId.ToString(),
-            Text = i.Direccion
-        })
-    };
+    ViewData["IdInquilino"] = new SelectList(_context.Inquilinos, "InquilinoId", "Nombre", nuevoContrato.IdInquilino);
+    ViewData["IdInmueble"] = new SelectList(_context.Inmuebles, "InmuebleId", "Direccion", nuevoContrato.IdInmueble);
 
-    return View("Renovar", viewModel);
-}
-[HttpPost]
-[ValidateAntiForgeryToken]
-public IActionResult Renovar(ContratoViewModel model)
-{
-    if (!ModelState.IsValid)
-    {
-        model.Inquilinos = _context.Inquilinos.Select(i => new SelectListItem
-        {
-            Value = i.InquilinoId.ToString(),
-            Text = i.Nombre
-        });
-
-        model.Inmuebles = _context.Inmuebles.Select(i => new SelectListItem
-        {
-            Value = i.InmuebleId.ToString(),
-            Text = i.Direccion
-        });
-
-        return View("Renovar", model);
-    }
-
-    _context.Contratos.Add(model.Contrato);
-    _context.SaveChanges();
-
-    return RedirectToAction("Index");
+    return View("Create", nuevoContrato); // Reutiliza la vista Create
 }
 
 public IActionResult Rescindir(int id)

@@ -1,0 +1,19 @@
+@model Inmobiliaria_Benito.Models.Contrato
+
+@{
+    ViewData["Title"] = "Rescindir contrato";
+}
+
+<h2>Rescindir Contrato</h2>
+
+<form asp-action="Rescindir" method="post">
+    <input type="hidden" asp-for="ContratoId" />
+
+    <div class="mb-3">
+        <label>Monto de la multa</label>
+        <input type="number" name="multa" step="0.01" class="form-control" required />
+    </div>
+
+    <button type="submit" class="btn btn-danger">Confirmar Rescisión</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>
