@@ -59,7 +59,7 @@ namespace Inmobiliaria_Benito.Controllers
 
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+     
         public IActionResult Create(ContratoViewModel model)
         {
             if (!ModelState.IsValid)

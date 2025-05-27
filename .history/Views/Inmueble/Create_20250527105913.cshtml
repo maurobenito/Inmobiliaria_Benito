@@ -44,8 +44,7 @@
 
     <div class="form-group">
         <label for="IdPropietario" class="control-label">Propietario</label>
-       <select asp-for="Inmueble.IdPropietario" class="form-control" asp-items="Model.Propietarios">
-
+        <select asp-for="IdPropietario" class="form-control" asp-items="Model.Propietarios">
             <option value="">Seleccione un propietario</option>
         </select>
         <span asp-validation-for="IdPropietario" class="text-danger"></span>
@@ -53,7 +52,7 @@
 
     <div class="form-group">
         <label for="IdTipo" class="control-label">Tipo de Inmueble</label>
-    <select asp-for="Inmueble.IdTipo" class="form-control" asp-items="Model.TiposInmueble">
+        <select asp-for="IdTipo" class="form-control" asp-items="Model.TiposInmueble">
             <option value="">Seleccione un tipo</option>
         </select>
         <span asp-validation-for="IdTipo" class="text-danger"></span>

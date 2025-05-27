@@ -1,0 +1,23 @@
+@model Inmobiliaria_Benito.Models.InmuebleViewModel
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        @Html.LabelFor(model => model.Inmueble.Direccion)
+        @Html.TextBoxFor(model => model.Inmueble.Direccion, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Inmueble.Direccion)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Inmueble.IdPropietario)
+        @Html.DropDownListFor(model => model.Inmueble.IdPropietario, Model.Propietarios, "Seleccione un propietario", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Inmueble.IdPropietario)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Inmueble.IdTipo)
+        @Html.DropDownListFor(model => model.Inmueble.IdTipo, Model.TiposInmueble, "Seleccione un tipo", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Inmueble.IdTipo)
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar</button>
+</form>

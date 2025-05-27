@@ -85,6 +85,7 @@ namespace Inmobiliaria_Benito.Controllers
                 return View(model);
             }
 
+            contrato.UsuarioCreacion = User.Identity.Name; // guarda quién creó el contrato
             _context.Contratos.Add(contrato);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));

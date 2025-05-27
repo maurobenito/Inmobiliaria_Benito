@@ -1,0 +1,41 @@
+@model Inmobiliaria_Benito.Models.Contrato
+
+<h2>Detalles del Contrato</h2>
+
+<div>
+    <h4>Contrato</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">Inquilino</dt>
+        <dd class="col-sm-9">@Model.IdInquilinoNavigation?.Nombre @Model.IdInquilinoNavigation?.Apellido</dd>
+
+        <dt class="col-sm-3">Inmueble</dt>
+        <dd class="col-sm-9">@Model.IdInmuebleNavigation?.Direccion</dd>
+
+        <dt class="col-sm-3">Propietario</dt>
+        <dd class="col-sm-9">@Model.IdInmuebleNavigation?.IdPropietarioNavigation?.Nombre @Model.IdInmuebleNavigation?.IdPropietarioNavigation?.Apellido</dd>
+
+        <dt class="col-sm-3">Fecha Desde</dt>
+        <dd class="col-sm-9">@Model.FechaDesde</dd>
+
+        <dt class="col-sm-3">Fecha Hasta</dt>
+        <dd class="col-sm-9">@Model.FechaHasta</dd>
+
+        <dt class="col-sm-3">Monto Mensual</dt>
+        <dd class="col-sm-9">$@Model.Monto</dd>
+
+        @if (Model.RescindidoAnticipadamente)
+        {
+            <dt class="col-sm-3 text-danger">Rescindido Anticipadamente</dt>
+            <dd class="col-sm-9 text-danger">Sí</dd>
+
+            <dt class="col-sm-3">Multa por Rescisión</dt>
+            <dd class="col-sm-9">$@Model.MultaPorRescision</dd>
+        }
+    </dl>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ContratoId" class="btn btn-warning">Editar</a>
+    <a asp-action="Index" class="btn btn-secondary">Volver</a>
+</div>

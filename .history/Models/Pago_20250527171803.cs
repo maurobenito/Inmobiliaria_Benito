@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+#nullable enable
 
 namespace Inmobiliaria_Benito.Models;
 
@@ -16,7 +17,7 @@ public partial class Pago
     public decimal? Importe { get; set; }
 
     public string UsuarioCreacion { get; set; }
-    public string UsuarioAnulacion { get; set; }
+    public string? UsuarioAnulacion { get; set; }
 
 
     public virtual Contrato IdContratoNavigation { get; set; }

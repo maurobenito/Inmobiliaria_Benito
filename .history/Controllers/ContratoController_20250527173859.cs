@@ -59,7 +59,7 @@ namespace Inmobiliaria_Benito.Controllers
 
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+     
         public IActionResult Create(ContratoViewModel model)
         {
             if (!ModelState.IsValid)
@@ -84,7 +84,7 @@ namespace Inmobiliaria_Benito.Controllers
                 model.Inmuebles = _context.Inmuebles.Select(i => new SelectListItem { Value = i.InmuebleId.ToString(), Text = i.Direccion });
                 return View(model);
             }
-
+            contrato.UsuarioCreacion = User.Identity.Name ?? "sistema";
             _context.Contratos.Add(contrato);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));

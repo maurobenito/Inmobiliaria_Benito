@@ -2,16 +2,15 @@
 
 
 
-
 @{
     ViewData["Title"] = "Contratos";
 }
 
-<h2 class="text-primary">Contratos</h2>
+<h2>Contratos</h2>
 
 <a asp-action="Create" class="btn btn-primary mb-3">Nuevo Contrato</a>
 
-<table class="table table-bordered table-striped">
+<table class="table table-striped">
     <thead>
         <tr>
             <th>ID</th>
@@ -20,24 +19,22 @@
             <th>Desde</th>
             <th>Hasta</th>
             <th>Monto</th>
-            <th style="min-width: 100px;">Estado</th>
-            <th style="min-width: 280px;">Acciones</th>
+            <th>Estado</th> <!-- Estado separado -->
+            <th style="width: 260px;">Acciones</th> <!-- Botones en columna separada -->
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            var esRescindido = item.RescindidoAnticipadamente;
-
-            <tr class="@(esRescindido ? "table-danger" : "")">
+            <tr class="@(item.RescindidoAnticipadamente ? "table-danger" : "")">
                 <td>@item.ContratoId</td>
                 <td>@item.IdInquilinoNavigation?.Nombre</td>
                 <td>@item.IdInmuebleNavigation?.Direccion</td>
                 <td>@(item.FechaDesde.HasValue ? item.FechaDesde.Value.ToString("dd/MM/yyyy") : "")</td>
                 <td>@(item.FechaHasta.HasValue ? item.FechaHasta.Value.ToString("dd/MM/yyyy") : "")</td>
-                <td>@item.Monto</td>
+                <td>@item.Monto</td
                 <td>
-                    @if (esRescindido)
+                    @if (item.RescindidoAnticipadamente)
                     {
                         <span class="badge bg-danger">Rescindido</span>
                     }
@@ -46,15 +43,12 @@
                         <span class="badge bg-success">Activo</span>
                     }
                 </td>
-                <td>
-                    @if (!esRescindido)
-                    {
-                        <a asp-action="Edit" asp-route-id="@item.ContratoId" class="btn btn-warning btn-sm me-1">Editar</a>
-                        <a asp-action="Rescindir" asp-route-id="@item.ContratoId" class="btn btn-secondary btn-sm me-1">Rescindir</a>
-                        <a asp-action="Renovar" asp-route-id="@item.ContratoId" class="btn btn-success btn-sm me-1">Renovar</a>
-                    }
-                    <a asp-action="Details" asp-route-id="@item.ContratoId" class="btn btn-info btn-sm me-1">Detalles</a>
+                <td style="white-space: nowrap;">
+                    <a asp-action="Edit" asp-route-id="@item.ContratoId" class="btn btn-warning btn-sm">Editar</a>
+                    <a asp-action="Details" asp-route-id="@item.ContratoId" class="btn btn-info btn-sm">Detalles</a>
                     <a asp-action="Delete" asp-route-id="@item.ContratoId" class="btn btn-danger btn-sm">Eliminar</a>
+                    <a asp-action="Rescindir" asp-route-id="@item.ContratoId" class="btn btn-secondary btn-sm">Rescindir</a>
+                    <a asp-action="Renovar" asp-route-id="@item.ContratoId" class="btn btn-success btn-sm">Renovar</a>
                 </td>
             </tr>
         }

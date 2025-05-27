@@ -25,15 +25,27 @@ namespace Inmobiliaria_Benito.Controllers
             return View(lista);
         }
 
-        public IActionResult Details(int id)
-        {
-            var contrato = _context.Contratos
-                            .Include(c => c.IdInquilinoNavigation)
-                            .Include(c => c.IdInmuebleNavigation)
-                            .FirstOrDefault(c => c.ContratoId == id);
-            if (contrato == null) return NotFound();
-            return View(contrato);
-        }
+       public IActionResult Details(int? id)
+{
+    if (id == null)
+    {
+        return NotFound();
+    }
+
+    var contrato = _context.Contratos
+        .Include(c => c.UsuarioCreacion)
+        .Include(c => c.UsuarioRescision)
+        .Include(c => c.IdInquilinoNavigation)
+        .Include(c => c.IdInmuebleNavigation)
+        .FirstOrDefault(m => m.ContratoId == id);
+
+    if (contrato == null)
+    {
+        return NotFound();
+    }
+
+    return View(contrato);
+}
 
         // GET: Contrato/Create
         public IActionResult Create()

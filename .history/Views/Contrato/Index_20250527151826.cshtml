@@ -1,0 +1,54 @@
+@model IEnumerable<Inmobiliaria_Benito.Models.Contrato>
+
+@if (TempData["Mensaje"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Mensaje"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["Error"]
+    </div>
+}
+<h2>Contratos</h2>
+
+<a asp-action="Create" class="btn btn-primary">Nuevo Contrato</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Inquilino</th>
+            <th>Inmueble</th>
+            <th>Desde</th>
+            <th>Hasta</th>
+            <th>Monto</th>
+            <th>Estado</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+  @foreach (var item in Model)
+{
+    <tr>
+        <td>@item.ContratoId</td>
+        <td>@item.IdInquilinoNavigation?.Nombre</td>
+        <td>@item.IdInmuebleNavigation?.Direccion</td>
+       <td>@(item.FechaDesde.HasValue ? item.FechaDesde.Value.ToString("dd/MM/yyyy") : "")</td>
+        <td>@(item.FechaHasta.HasValue ? item.FechaHasta.Value.ToString("dd/MM/yyyy") : "")</td>
+
+        <td>@item.Monto</td>
+        <td>
+                <a asp-action="Edit" asp-route-id="@item.ContratoId" class="btn btn-warning btn-sm">Editar</a>
+                <a asp-action="Details" asp-route-id="@item.ContratoId" class="btn btn-info btn-sm">Detalles</a>
+                <a asp-action="Delete" asp-route-id="@item.ContratoId" class="btn btn-danger btn-sm">Eliminar</a>
+                <a asp-action="Rescindir" asp-route-id="@item.ContratoId" class="btn btn-secondary btn-sm">Rescindir</a>
+                <a asp-action="Renovar" asp-route-id="@item.ContratoId" class="btn btn-success btn-sm">Renovar</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

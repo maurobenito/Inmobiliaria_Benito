@@ -31,7 +31,7 @@
         {
             <tr>
                 <td>@item.Direccion</td>
-                <td>@(item.IdPropietarioNavigation != null ? item.IdPropietarioNavigation.Nombre + " " + item.IdPropietarioNavigation.Apellido : "Sin propietario")</td>
+                <td>@(item.IdPropietarioNavigation != null ? item.IdPropietarioNavigation.Nombre : "Sin propietario")</td>
                 <td>@(item.IdTipoNavigation != null ? item.IdTipoNavigation.Nombre : "Sin tipo")</td>
                 <td>@item.Uso</td>
                 <td>@item.Ambientes</td>

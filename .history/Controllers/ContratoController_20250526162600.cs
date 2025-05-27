@@ -284,7 +284,7 @@ public IActionResult Rescindir(int id)
 [HttpPost]
 [ValidateAntiForgeryToken]
 [HttpPost]
-
+[ValidateAntiForgeryToken]
 public IActionResult Rescindir(int id, decimal multa)
 {
     var contrato = _context.Contratos.Find(id);
@@ -311,9 +311,8 @@ public IActionResult Rescindir(int id, decimal multa)
 
     _context.Pagos.Add(pagoMulta);
     _context.SaveChanges();
-TempData["Mensaje"] = "Contrato rescindido y multa registrada como pago.";
-return RedirectToAction("Index");
 
+    return RedirectToAction("Index");
 }
 
 

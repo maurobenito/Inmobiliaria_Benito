@@ -1,0 +1,49 @@
+@model Inmobiliaria_Benito.Models.InmuebleViewModel
+
+
+@{
+    ViewData["Title"] = "Listado de Inmuebles";
+}
+
+<h2>Listado de Inmuebles</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Nuevo Inmueble</a>
+</p>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["Error"]
+    </div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Uso</th>
+            <th>Dirección</th>
+            <th>Ambientes</th>
+            <th>Propietario</th>
+            <th>Tipo</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Uso</td>
+            <td>@item.Direccion</td>
+            <td>@item.Ambientes</td>
+            <td>@item.IdPropietarioNavigation.Nombre @item.IdPropietarioNavigation.Apellido</td>
+            <td>@item.IdTipoNavigation.Nombre</td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.InmuebleId" class="btn btn-warning btn-sm">Editar</a>
+                <a asp-action="Details" asp-route-id="@item.InmuebleId" class="btn btn-info btn-sm">Detalles</a>
+                <a asp-action="Delete" asp-route-id="@item.InmuebleId" class="btn btn-danger btn-sm">Eliminar</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
