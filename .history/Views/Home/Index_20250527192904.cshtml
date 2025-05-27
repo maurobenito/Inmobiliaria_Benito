@@ -1,0 +1,16 @@
+﻿@{
+    ViewData["Title"] = "Inicio";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Inmobiliaria Benito</h1>
+    <p class="lead">Seleccioná una sección para comenzar</p>
+
+    <div class="mt-4 d-flex justify-content-center gap-4 flex-wrap">
+        <a class="btn btn-primary btn-lg" href="@Url.Action("Index", "Inquilino")">Inquilinos</a>
+        <a class="btn btn-success btn-lg" href="@Url.Action("Index", "Inmueble")">Inmuebles</a>
+        <a class="btn btn-warning btn-lg" href="@Url.Action("Index", "Contrato")">Contratos</a>
+        <a class="btn btn-warning btn-lg" href="@Url.Action("Index", "Pago")">Pagos</a>
+        <a class="btn btn-dark btn-lg" href="@Url.Action("Index", "Usuario")">Usuarios</a>
+    </div>
+</div>
