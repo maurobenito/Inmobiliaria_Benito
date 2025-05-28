@@ -9,6 +9,7 @@
 
 <form asp-action="Create" method="post" enctype="multipart/form-data">
     @Html.AntiForgeryToken()
+    <a asp-action="Index" class="btn btn-secondary">Volver</a>
 
     <div class="mb-3">
         <label asp-for="Nombre" class="form-label"></label>

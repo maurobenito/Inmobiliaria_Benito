@@ -8,20 +8,20 @@
 <form method="get" asp-action="PorInmueble">
     <div class="mb-3">
         <label for="InmuebleId" class="form-label">Seleccionar inmueble</label>
-     <select id="InmuebleId" name="Id" class="form-select" onchange="this.form.submit()">
+       <select id="InmuebleId" name="InmuebleId" class="form-select mb-3" onchange="this.form.submit()">
+   
     <option value="">Seleccione un inmueble</option>
-    @foreach (var inmueble in Model.Inmuebles)
+@foreach (var inmueble in Model.Inmuebles)
+{
+    if (Model.InmuebleId.HasValue && Model.InmuebleId.Value.ToString() == inmueble.Value)
     {
-        if (Model.InmuebleId.HasValue && Model.InmuebleId.Value.ToString() == inmueble.Value)
-        {
-            <option value="@inmueble.Value" selected="selected">@inmueble.Text</option>
-        }
-        else
-        {
-            <option value="@inmueble.Value">@inmueble.Text</option>
-        }
+        <option value="@inmueble.Value" selected="selected">@inmueble.Text</option>
     }
-</select>
+    else
+    {
+        <option value="@inmueble.Value">@inmueble.Text</option>
+    }
+}
 
 
     </div>

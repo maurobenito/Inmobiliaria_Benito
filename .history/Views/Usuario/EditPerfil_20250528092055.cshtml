@@ -4,7 +4,7 @@
 }
 
 <h2>Editar Perfil</h2>
-
+<a asp-action="Index" class="btn btn-secondary">Volver</a>
 
 <form asp-action="EditPerfil" method="post" enctype="multipart/form-data">
     <input type="hidden" asp-for="UsuarioId" />
@@ -29,5 +29,4 @@
         <input type="file" name="FotoPerfilFile" class="form-control" />
     </div>
     <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-    <a asp-action="Index" class="btn btn-secondary">Volver</a>
 </form>

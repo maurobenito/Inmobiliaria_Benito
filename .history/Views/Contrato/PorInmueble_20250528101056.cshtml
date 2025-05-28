@@ -1,4 +1,4 @@
-@model Inmobiliaria_Benito.Models.ContratosPorInmuebleViewModel
+@model Inmobiliaria_Benito.ViewModels.ContratosPorInmuebleViewModel
 @{
     ViewData["Title"] = "Contratos por Inmueble";
 }
@@ -8,22 +8,15 @@
 <form method="get" asp-action="PorInmueble">
     <div class="mb-3">
         <label for="InmuebleId" class="form-label">Seleccionar inmueble</label>
-     <select id="InmuebleId" name="Id" class="form-select" onchange="this.form.submit()">
-    <option value="">Seleccione un inmueble</option>
-    @foreach (var inmueble in Model.Inmuebles)
-    {
-        if (Model.InmuebleId.HasValue && Model.InmuebleId.Value.ToString() == inmueble.Value)
-        {
-            <option value="@inmueble.Value" selected="selected">@inmueble.Text</option>
-        }
-        else
-        {
-            <option value="@inmueble.Value">@inmueble.Text</option>
-        }
-    }
-</select>
-
-
+        <select class="form-select" id="InmuebleId" name="id" onchange="this.form.submit()">
+            <option value="">-- Seleccione un inmueble --</option>
+            @foreach (var inmueble in Model.Inmuebles)
+            {
+                <option value="@inmueble.Value" @(Model.InmuebleId.ToString() == inmueble.Value ? "selected" : "")>
+                    @inmueble.Text
+                </option>
+            }
+        </select>
     </div>
 </form>
 

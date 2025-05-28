@@ -4,7 +4,6 @@
 }
 
 <h2>Crear Usuario</h2>
-
 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
 <form asp-action="Create" method="post" enctype="multipart/form-data">
@@ -43,6 +42,7 @@
     </div>
     <button type="submit" class="btn btn-primary">Crear</button>
 </form>
+    <a asp-action="Index" class="btn btn-secondary">Volver</a>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

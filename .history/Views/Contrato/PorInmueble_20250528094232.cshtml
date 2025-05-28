@@ -1,0 +1,30 @@
+@model Inmobiliaria_Benito.ViewModels.ContratosPorInmuebleViewModel
+@{
+    ViewData["Title"] = "Contratos del Inmueble";
+}
+
+<h2>Contratos del inmueble: @ViewBag.Direccion</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Inquilino</th>
+            <th>Fecha Desde</th>
+            <th>Fecha Hasta</th>
+            <th>Monto</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.IdInquilinoNavigation.Nombre @item.IdInquilinoNavigation.Apellido</td>
+            <td>@(item.FechaDesde?.ToString("dd/MM/yyyy"))</td>
+            <td>@(item.FechaHasta?.ToString("dd/MM/yyyy"))</td>
+            <td>@(item.Monto.HasValue ? item.Monto.Value.ToString("C") : "")</td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<a asp-action="Index" class="btn btn-secondary">Volver</a>

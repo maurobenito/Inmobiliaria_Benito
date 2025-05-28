@@ -198,38 +198,32 @@ namespace Inmobiliaria_Benito.Controllers
 
             return View(contratos);
         }
-       public IActionResult PorInmueble(int? id)
-{
-    var inmuebles = _context.Inmuebles
-        .Select(i => new SelectListItem
+        public IActionResult PorInmueble(int? id)
         {
-            Value = i.InmuebleId.ToString(),
-            Text = i.Direccion
-        }).ToList();
+            var inmuebles = _context.Inmuebles
+                .Select(i => new SelectListItem
+                {
+                    Value = i.InmuebleId.ToString(),
+                    Text = i.Direccion
+                }).ToList();
 
-    var contratos = id.HasValue
-        ? _context.Contratos
-            .Include(c => c.IdInquilinoNavigation)
-            .Include(c => c.IdInmuebleNavigation)
-            .Where(c => c.IdInmueble == id.Value)
-            .ToList()
-        : new List<Contrato>();
+            var contratos = id.HasValue
+                ? _context.Contratos
+                    .Include(c => c.IdInquilinoNavigation)
+                    .Include(c => c.IdInmuebleNavigation)
+                    .Where(c => c.IdInmueble == id)
+                    .ToList()
+                : new List<Contrato>();
 
-    var direccion = id.HasValue
-        ? _context.Inmuebles.FirstOrDefault(i => i.InmuebleId == id.Value)?.Direccion
-        : "No seleccionado";
+            var vm = new ViewModels.ContratosPorInmuebleViewModel
+            {
+                InmuebleIdSeleccionado = id,
+                Inmuebles = inmuebles,
+                Contratos = contratos
+            };
 
-    var viewModel = new ContratosPorInmuebleViewModel
-    {
-        InmuebleId = id,
-        Direccion = direccion,
-        Contratos = contratos,
-        Inmuebles = inmuebles
-    };
-
-    return View(viewModel);
-}
-
+            return View(vm);
+        }
 
 public IActionResult Renovar(int id)
         {
