@@ -18,12 +18,11 @@
         <label for="id" class="form-label">Seleccione un contrato:</label>
         <select id="id" name="id" class="form-select" onchange="this.form.submit()">
             <option value="">Seleccione un contrato</option>
-       @foreach (var contratoItem in (List<SelectListItem>)ViewBag.Contratos)
+         @foreach (var contratos in (List<SelectListItem>)ViewBag.Contratos)
 {
-    var selected = ViewBag.IdContrato?.ToString() == contratoItem.Value ? "selected" : "";
-    @:<option value="@contratoItem.Value" @selected>@contratoItem.Text</option>
+    var selected = ViewBag.IdContrato?.ToString() == contratos.Value ? "selected" : "";
+    @:<option value="@contratos.Value" @selected>@contratos.Text</option>
 }
-
 
 }
 

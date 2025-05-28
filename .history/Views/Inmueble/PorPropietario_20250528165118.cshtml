@@ -9,24 +9,18 @@
 <form method="get" asp-action="PorPropietario" class="mb-4">
     <label for="propietarioId">Seleccionar Propietario:</label>
    
- <form method="get" asp-action="PorPropietario" class="mb-4">
-    <label for="propietarioId">Seleccionar Propietario:</label>
-    <select id="propietarioId" name="propietarioId" class="form-select" onchange="this.form.submit()">
-        <option value="">-- Seleccione un propietario --</option>
-        @foreach (var propietario in (List<SelectListItem>)ViewBag.Propietarios)
-        {
-            if (ViewBag.PropietarioSeleccionado != null && ViewBag.PropietarioSeleccionado.ToString() == propietario.Value)
-            {
-                <option value="@propietario.Value" selected="selected">@propietario.Text</option>
-            }
-            else
-            {
-                <option value="@propietario.Value">@propietario.Text</option>
-            }
+             <select id="propietarioId" name="propietarioId" class="form-control" onchange="this.form.submit()">
+    <option value="">-- Seleccione un propietario --</option>
+    @foreach (var p in (List<SelectListItem>)ViewBag.Propietarios)
+    {
+        var selected = ViewBag.PropietarioSeleccionado?.ToString() == p.Value ? "selected" : "";
+        <option value="@p.Value" selected="@selected">@p.Text</option>
+    }
+</select>
+
+            </text>
         }
     </select>
-</form>
-
 </form>
 
 @if (ViewBag.Mensaje != null)

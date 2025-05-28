@@ -8,24 +8,7 @@
 
 <form method="get" asp-action="PorPropietario" class="mb-4">
     <label for="propietarioId">Seleccionar Propietario:</label>
-   
- <form method="get" asp-action="PorPropietario" class="mb-4">
-    <label for="propietarioId">Seleccionar Propietario:</label>
-    <select id="propietarioId" name="propietarioId" class="form-select" onchange="this.form.submit()">
-        <option value="">-- Seleccione un propietario --</option>
-        @foreach (var propietario in (List<SelectListItem>)ViewBag.Propietarios)
-        {
-            if (ViewBag.PropietarioSeleccionado != null && ViewBag.PropietarioSeleccionado.ToString() == propietario.Value)
-            {
-                <option value="@propietario.Value" selected="selected">@propietario.Text</option>
-            }
-            else
-            {
-                <option value="@propietario.Value">@propietario.Text</option>
-            }
-        }
-    </select>
-</form>
+ @Html.DropDownList("propietarioId", (List<SelectListItem>)ViewBag.Propietarios, "Seleccione un propietario", new { @class = "form-select" })
 
 </form>
 
@@ -58,3 +41,4 @@
         </tbody>
     </table>
 }
+
