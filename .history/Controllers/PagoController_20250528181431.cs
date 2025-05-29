@@ -79,8 +79,6 @@ private int ObtenerUsuarioLogueadoId()
     { 
         if (ModelState.IsValid)
         {
-            pago.UsuarioCreacionId = ObtenerUsuarioLogueadoId(); // <-- Esto es esencial
-
             _context.Add(pago);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
@@ -204,47 +202,30 @@ private int ObtenerUsuarioLogueadoId()
 
         return RedirectToAction(nameof(Index));
     }
-  public IActionResult Anular(int id)
-{
-    var pago = _context.Pagos.FirstOrDefault(p => p.PagoId == id);
-    if (pago == null)
-        return NotFound();
-
-    // Marcamos el pago como anulado y auditamos
-    pago.Anulado = true;
-    pago.UsuarioAnulacionId = ObtenerUsuarioLogueadoId(); // 👈 Auditoría
-
-    _context.Update(pago);
-    _context.SaveChanges();
-
-    TempData["Mensaje"] = "El pago fue anulado correctamente.";
-    return RedirectToAction("Index");
-}
-
 public IActionResult PorContrato(int id)
-    {
-        var pagos = _context.Pagos
-            .Where(p => p.ContratoId == id)
-            .OrderBy(p => p.FechaPago)
-            .ToList();
+{
+    var pagos = _context.Pagos
+        .Where(p => p.ContratoId == id)
+        .OrderBy(p => p.FechaPago)
+        .ToList();
 
-        ViewBag.IdContrato = id;
-        ViewBag.DatosContrato = _context.Contratos
-            .Include(c => c.IdInquilinoNavigation)
-            .Include(c => c.IdInmuebleNavigation)
-            .FirstOrDefault(c => c.ContratoId == id);
+    ViewBag.IdContrato = id;
+    ViewBag.DatosContrato = _context.Contratos
+        .Include(c => c.IdInquilinoNavigation)
+        .Include(c => c.IdInmuebleNavigation)
+        .FirstOrDefault(c => c.ContratoId == id);
 
-        ViewBag.Contratos = _context.Contratos
-            .Include(c => c.IdInquilinoNavigation)
-            .Include(c => c.IdInmuebleNavigation)
-            .Select(c => new SelectListItem
-            {
-                Value = c.ContratoId.ToString(),
-                Text = $"{c.IdInquilinoNavigation.Nombre} {c.IdInquilinoNavigation.Apellido} - {c.IdInmuebleNavigation.Direccion}"
-            }).ToList();
+    ViewBag.Contratos = _context.Contratos
+        .Include(c => c.IdInquilinoNavigation)
+        .Include(c => c.IdInmuebleNavigation)
+        .Select(c => new SelectListItem
+        {
+            Value = c.ContratoId.ToString(),
+            Text = $"{c.IdInquilinoNavigation.Nombre} {c.IdInquilinoNavigation.Apellido} - {c.IdInmuebleNavigation.Direccion}"
+        }).ToList();
 
-        return View(pagos);
-    }
+    return View(pagos);
+}
 
 
 

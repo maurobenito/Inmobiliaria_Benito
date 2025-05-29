@@ -66,7 +66,6 @@ namespace Inmobiliaria_Benito.Controllers
         }
 
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(ContratoViewModel model)
@@ -94,10 +93,14 @@ namespace Inmobiliaria_Benito.Controllers
                 return View(model);
             }
 
-            _context.Contratos.Add(contrato);
-            _context.SaveChanges();
-            return RedirectToAction(nameof(Index));
-        }
+                contrato.UsuarioCreacionId = ObtenerUsuarioLogueadoId(); // <-- AGREGAR ESTA LÍNEA
+
+        _context.Contratos.Add(contrato);
+        _context.SaveChanges();
+        return RedirectToAction(nameof(Index));
+}
+
+        
 
         public IActionResult Edit(int id)
         {

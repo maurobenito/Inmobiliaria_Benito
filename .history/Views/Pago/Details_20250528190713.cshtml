@@ -1,0 +1,31 @@
+@model Inmobiliaria_Benito.Models.Pago
+
+@{
+    ViewData["Title"] = "Detalle de Pago";
+}
+
+<h2>Detalle de Pago</h2>
+
+<div>
+    <h4>Pago</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">Contrato N°</dt>
+        <dd class="col-sm-9">@Model.IdContratoNavigation?.ContratoId</dd>
+
+        <dt class="col-sm-3">Inquilino</dt>
+        <dd class="col-sm-9">@Model.IdContratoNavigation?.IdInquilinoNavigation?.Nombre</dd>
+
+        <dt class="col-sm-3">Dirección del Inmueble</dt>
+        <dd class="col-sm-9">@Model.IdContratoNavigation?.IdInmuebleNavigation?.Direccion</dd>
+
+        <dt class="col-sm-3">Fecha de Pago</dt>
+        <dd class="col-sm-9">@Model.FechaPago?.ToShortDateString()</dd>
+
+        <dt class="col-sm-3">Importe</dt>
+        <dd class="col-sm-9">$@Model.Importe</dd>
+    </dl>
+</div>
+
+<a asp-action="Edit" asp-route-id="@Model.PagoId" class="btn btn-warning">Editar</a>
+<a asp-action="Index" class="btn btn-secondary">Volver</a>

@@ -20,17 +20,9 @@
 
         <dt class = "col-sm-2">Monto</dt>
         <dd class = "col-sm-10">@Model.Monto</dd>
-            
     </dl>
     <dt class="col-sm-2">Creado por</dt>
-    <dd class="col-sm-10">@Model.UsuarioCreacion?.Nombre @Model.UsuarioCreacion?.Apellido</dd>
-
-@if (Model.UsuarioFinalizacion != null)
-{
-    <dt class="col-sm-2">Finalizado por</dt>
-    <dd class="col-sm-10">@Model.UsuarioFinalizacion?.Nombre @Model.UsuarioFinalizacion?.Apellido</dd>
-}
-
+<dd class="col-sm-10">@Model.UsuarioCreacion?.Nombre @Model.UsuarioCreacion?.Apellido</dd>
 
 @if (Model.UsuarioFinalizacion != null)
 {

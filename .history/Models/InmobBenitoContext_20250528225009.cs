@@ -153,47 +153,48 @@ public partial class InmobBenitoContext : DbContext
         });
 
         modelBuilder.Entity<Pago>(entity =>
-        {
-            entity.HasKey(e => e.PagoId).HasName("PRIMARY");
+{
+    entity.HasKey(e => e.PagoId).HasName("PRIMARY");
 
-            entity.ToTable("pago");
+    entity.ToTable("pago");
 
-            entity.HasIndex(e => e.ContratoId, "id_contrato");
+    entity.HasIndex(e => e.ContratoId, "id_contrato");
 
-            entity.Property(e => e.PagoId).HasColumnType("int(11)");
-            entity.Property(e => e.FechaPago).HasColumnName("fecha_pago");
-            entity.Property(e => e.ContratoId)
-                .HasColumnType("int(11)")
-                .HasColumnName("id_contrato");
-            entity.Property(e => e.Importe)
-                .HasPrecision(10, 2)
-                .HasColumnName("importe");
-            entity.Property(e => e.NumeroPago)
-                .HasColumnType("int(11)")
-                .HasColumnName("numero_pago");
+    entity.Property(e => e.PagoId).HasColumnType("int(11)");
+    entity.Property(e => e.FechaPago).HasColumnName("fecha_pago");
+    entity.Property(e => e.ContratoId)
+        .HasColumnType("int(11)")
+        .HasColumnName("id_contrato");
+    entity.Property(e => e.Importe)
+        .HasPrecision(10, 2)
+        .HasColumnName("importe");
+    entity.Property(e => e.NumeroPago)
+        .HasColumnType("int(11)")
+        .HasColumnName("numero_pago");
 
-            entity.HasOne(d => d.IdContratoNavigation).WithMany(p => p.Pagos)
-                .HasForeignKey(d => d.ContratoId)
-                .HasConstraintName("pago_ibfk_1");
-                
-        modelBuilder.Entity<Pago>()
-        .HasOne(p => p.UsuarioCreacion)
+    // ✅ Agregá acá:
+    entity.Property(e => e.Anulado)
+        .HasColumnName("Anulado")
+        .HasColumnType("tinyint(1)")
+        .IsRequired();
+
+    entity.HasOne(d => d.IdContratoNavigation).WithMany(p => p.Pagos)
+        .HasForeignKey(d => d.ContratoId)
+        .HasConstraintName("pago_ibfk_1");
+
+    entity.HasOne(p => p.UsuarioCreacion)
         .WithMany()
         .HasForeignKey(p => p.UsuarioCreacionId)
         .OnDelete(DeleteBehavior.Restrict)
         .HasConstraintName("FK_Pago_UsuarioCreacion");
 
-        modelBuilder.Entity<Pago>()
-        .HasOne(p => p.UsuarioAnulacion)
+    entity.HasOne(p => p.UsuarioAnulacion)
         .WithMany()
         .HasForeignKey(p => p.UsuarioAnulacionId)
         .OnDelete(DeleteBehavior.Restrict)
         .HasConstraintName("FK_Pago_UsuarioAnulacion");
-        
-        
+});
 
-
-        });
 
         modelBuilder.Entity<Propietario>(entity =>
         {

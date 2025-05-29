@@ -15,7 +15,8 @@ public partial class Pago
 
     public decimal? Importe { get; set; }
 
-    public bool Anulado { get; set; } // 👈 Esto es crucial
+    public bool Anulado { get; set; } = false;
+
    // En Pago.cs
     public int? UsuarioCreacionId { get; set; }
 

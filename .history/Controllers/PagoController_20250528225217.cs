@@ -204,23 +204,7 @@ private int ObtenerUsuarioLogueadoId()
 
         return RedirectToAction(nameof(Index));
     }
-  public IActionResult Anular(int id)
-{
-    var pago = _context.Pagos.FirstOrDefault(p => p.PagoId == id);
-    if (pago == null)
-        return NotFound();
-
-    // Marcamos el pago como anulado y auditamos
-    pago.Anulado = true;
-    pago.UsuarioAnulacionId = ObtenerUsuarioLogueadoId(); // 👈 Auditoría
-
-    _context.Update(pago);
-    _context.SaveChanges();
-
-    TempData["Mensaje"] = "El pago fue anulado correctamente.";
-    return RedirectToAction("Index");
-}
-
+  
 public IActionResult PorContrato(int id)
     {
         var pagos = _context.Pagos

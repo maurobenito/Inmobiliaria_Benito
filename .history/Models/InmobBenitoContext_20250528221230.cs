@@ -189,8 +189,11 @@ public partial class InmobBenitoContext : DbContext
         .HasForeignKey(p => p.UsuarioAnulacionId)
         .OnDelete(DeleteBehavior.Restrict)
         .HasConstraintName("FK_Pago_UsuarioAnulacion");
-        
-        
+        entity.Property(e => e.Anulado)
+        .HasColumnName("Anulado")
+        .HasColumnType("tinyint(1)")
+        .IsRequired();
+
 
 
         });

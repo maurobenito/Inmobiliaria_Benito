@@ -17,7 +17,7 @@ public partial class Contrato
     public DateOnly? FechaHasta { get; set; }
 
     public decimal? Monto { get; set; }
-
+    public bool Anulado { get; set; } = false;
 
     public virtual Inmueble IdInmuebleNavigation { get; set; }
 

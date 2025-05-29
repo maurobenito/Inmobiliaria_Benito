@@ -54,16 +54,7 @@
                         <i class="bi bi-trash"></i> Eliminar
                     </a>
 
-                    @if (!item.Anulado)
-                    {
-                        <a asp-action="Anular" asp-route-id="@item.PagoId" class="btn btn-sm btn-outline-danger">
-                            <i class="bi bi-x-circle"></i> Anular
-                        </a>
-                    }
-                    else
-                    {
-                        <span class="text-danger fw-bold">Anulado</span>
-                    }
+                    
                 </td>
             </tr>
         }

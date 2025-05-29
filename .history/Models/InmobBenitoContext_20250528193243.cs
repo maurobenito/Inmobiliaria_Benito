@@ -70,18 +70,6 @@ public partial class InmobBenitoContext : DbContext
             entity.HasOne(d => d.IdInquilinoNavigation).WithMany(p => p.Contratos)
                 .HasForeignKey(d => d.IdInquilino)
                 .HasConstraintName("contrato_ibfk_1");
-                modelBuilder.Entity<Contrato>()
-                .HasOne(c => c.UsuarioCreacion)
-                .WithMany()
-                .HasForeignKey(c => c.UsuarioCreacionId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-                 modelBuilder.Entity<Contrato>()
-                .HasOne(c => c.UsuarioFinalizacion)
-                .WithMany()
-                .HasForeignKey(c => c.UsuarioFinalizacionId)
-                .OnDelete(DeleteBehavior.Restrict);
-
         });
 
         modelBuilder.Entity<Inmueble>(entity =>
@@ -176,21 +164,19 @@ public partial class InmobBenitoContext : DbContext
                 .HasForeignKey(d => d.ContratoId)
                 .HasConstraintName("pago_ibfk_1");
                 
-        modelBuilder.Entity<Pago>()
-        .HasOne(p => p.UsuarioCreacion)
-        .WithMany()
-        .HasForeignKey(p => p.UsuarioCreacionId)
-        .OnDelete(DeleteBehavior.Restrict)
-        .HasConstraintName("FK_Pago_UsuarioCreacion");
+    modelBuilder.Entity<Pago>()
+    .HasOne(p => p.UsuarioCreacion)
+    .WithMany()
+    .HasForeignKey(p => p.UsuarioCreacionId)
+    .OnDelete(DeleteBehavior.Restrict)
+    .HasConstraintName("FK_Pago_UsuarioCreacion");
 
-        modelBuilder.Entity<Pago>()
-        .HasOne(p => p.UsuarioAnulacion)
-        .WithMany()
-        .HasForeignKey(p => p.UsuarioAnulacionId)
-        .OnDelete(DeleteBehavior.Restrict)
-        .HasConstraintName("FK_Pago_UsuarioAnulacion");
-        
-        
+modelBuilder.Entity<Pago>()
+    .HasOne(p => p.UsuarioAnulacion)
+    .WithMany()
+    .HasForeignKey(p => p.UsuarioAnulacionId)
+    .OnDelete(DeleteBehavior.Restrict)
+    .HasConstraintName("FK_Pago_UsuarioAnulacion");
 
 
         });

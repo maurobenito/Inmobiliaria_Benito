@@ -1,0 +1,55 @@
+@model Inmobiliaria_Benito.Models.Pago
+
+@{
+    ViewData["Title"] = "Detalles del Pago";
+}
+
+<h2>Detalles del Pago</h2>
+
+<hr />
+<dl class="row">
+    <dt class="col-sm-3">Número de Pago</dt>
+    <dd class="col-sm-9">@Model.NumeroPago</dd>
+
+    <dt class="col-sm-3">Fecha de Pago</dt>
+    <dd class="col-sm-9">@Model.FechaPago?.ToString("dd/MM/yyyy")</dd>
+
+    <dt class="col-sm-3">Importe</dt>
+    <dd class="col-sm-9">$@Model.Importe?.ToString("N2")</dd>
+
+    <dt class="col-sm-3">Contrato</dt>
+    <dd class="col-sm-9">
+        @Model.IdContratoNavigation?.IdInquilinoNavigation?.Nombre
+        -
+        @Model.IdContratoNavigation?.IdInmuebleNavigation?.Direccion
+    </dd>
+
+  
+{
+    <dt class="col-sm-3">Creado por</dt>
+    <dd class="col-sm-9">
+        @Model.UsuarioCreacion.Nombre @Model.UsuarioCreacion.Apellido
+    </dd>
+}
+else
+{
+    <dt class="col-sm-3">Creado por</dt>
+    <dd class="col-sm-9">No disponible</dd>
+}
+
+    </dd>
+
+    @if (Model.UsuarioAnulacion != null)
+    {
+        <dt class="col-sm-3">Anulado por</dt>
+        <dd class="col-sm-9">
+            @Model.UsuarioAnulacion?.Nombre
+            @Model.UsuarioAnulacion?.Apellido
+        </dd>
+    }
+</dl>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.PagoId" class="btn btn-warning">Editar</a> |
+    <a asp-action="Index" class="btn btn-secondary">Volver</a>
+</div>

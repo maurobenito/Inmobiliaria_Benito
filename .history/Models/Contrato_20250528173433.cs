@@ -18,7 +18,6 @@ public partial class Contrato
 
     public decimal? Monto { get; set; }
 
-
     public virtual Inmueble IdInmuebleNavigation { get; set; }
 
     public virtual Inquilino IdInquilinoNavigation { get; set; }

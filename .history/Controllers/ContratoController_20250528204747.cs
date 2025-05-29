@@ -66,7 +66,6 @@ namespace Inmobiliaria_Benito.Controllers
         }
 
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(ContratoViewModel model)
@@ -94,10 +93,14 @@ namespace Inmobiliaria_Benito.Controllers
                 return View(model);
             }
 
-            _context.Contratos.Add(contrato);
-            _context.SaveChanges();
-            return RedirectToAction(nameof(Index));
-        }
+                contrato.UsuarioCreacionId = ObtenerUsuarioLogueadoId(); // <-- AGREGAR ESTA LÍNEA
+
+        _context.Contratos.Add(contrato);
+        _context.SaveChanges();
+        return RedirectToAction(nameof(Index));
+}
+
+        
 
         public IActionResult Edit(int id)
         {
@@ -277,32 +280,35 @@ public IActionResult Renovar(int id)
 
             return View("Renovar", viewModel);
         }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Renovar(ContratoViewModel model)
+       [HttpPost]
+[ValidateAntiForgeryToken]
+public IActionResult Renovar(ContratoViewModel model)
+{
+    if (!ModelState.IsValid)
+    {
+        model.Inquilinos = _context.Inquilinos.Select(i => new SelectListItem
         {
-            if (!ModelState.IsValid)
-            {
-                model.Inquilinos = _context.Inquilinos.Select(i => new SelectListItem
-                {
-                    Value = i.InquilinoId.ToString(),
-                    Text = i.Nombre
-                });
+            Value = i.InquilinoId.ToString(),
+            Text = i.Nombre
+        });
 
-                model.Inmuebles = _context.Inmuebles.Select(i => new SelectListItem
-                {
-                    Value = i.InmuebleId.ToString(),
-                    Text = i.Direccion
-                });
+        model.Inmuebles = _context.Inmuebles.Select(i => new SelectListItem
+        {
+            Value = i.InmuebleId.ToString(),
+            Text = i.Direccion
+        });
 
-                return View("Renovar", model);
-            }
+        return View("Renovar", model);
+    }
 
-            _context.Contratos.Add(model.Contrato);
-            _context.SaveChanges();
+    model.Contrato.UsuarioCreacionId = ObtenerUsuarioLogueadoId(); // 👈 AUDITORÍA
 
-            return RedirectToAction("Index");
-        }
+    _context.Contratos.Add(model.Contrato);
+    _context.SaveChanges();
+
+    return RedirectToAction("Index");
+}
+
 
         public IActionResult Rescindir(int id)
         {
@@ -312,40 +318,37 @@ public IActionResult Renovar(int id)
             return View(contrato);
         }
 
-        [HttpPost]
+       [HttpPost]
         [ValidateAntiForgeryToken]
-        [HttpPost]
-
         public IActionResult Rescindir(int id, decimal multa)
         {
-            var contrato = _context.Contratos.Find(id);
-            if (contrato == null) return NotFound();
+        var contrato = _context.Contratos.Find(id);
+        if (contrato == null) return NotFound();
 
-            contrato.RescindidoAnticipadamente = true;
-            contrato.MultaPorRescision = multa;
-            contrato.FechaHasta = DateOnly.FromDateTime(DateTime.Today); // Fin anticipado hoy
+        contrato.RescindidoAnticipadamente = true;
+        contrato.MultaPorRescision = multa;
+        contrato.FechaHasta = DateOnly.FromDateTime(DateTime.Today);
+        contrato.UsuarioFinalizacionId = ObtenerUsuarioLogueadoId(); // 👈 AUDITORÍA
 
-            // Guardar el contrato modificado
-            _context.Update(contrato);
-            _context.SaveChanges();
+        _context.Update(contrato);
+        _context.SaveChanges();
 
-            // Registrar el pago de la multa
-            var pagoMulta = new Pago
-            {
-                ContratoId = contrato.ContratoId,
-                FechaPago = DateOnly.FromDateTime(DateTime.Today),
-                Importe = multa,
-                NumeroPago = _context.Pagos
-                    .Where(p => p.ContratoId == contrato.ContratoId)
-                    .Count() + 1 // siguiente número de pago
-            };
+        var pagoMulta = new Pago
+        {
+        ContratoId = contrato.ContratoId,
+        FechaPago = DateOnly.FromDateTime(DateTime.Today),
+        Importe = multa,
+        NumeroPago = _context.Pagos.Where(p => p.ContratoId == contrato.ContratoId).Count() + 1,
+        UsuarioCreacionId = ObtenerUsuarioLogueadoId() // 👈 AUDITORÍA para el pago
+    };
 
-            _context.Pagos.Add(pagoMulta);
-            _context.SaveChanges();
-            TempData["Mensaje"] = "Contrato rescindido y multa registrada como pago.";
-            return RedirectToAction("Index");
+    _context.Pagos.Add(pagoMulta);
+    _context.SaveChanges();
 
-        }
+    TempData["Mensaje"] = "Contrato rescindido y multa registrada como pago.";
+    return RedirectToAction("Index");
+}
+
 
 
 

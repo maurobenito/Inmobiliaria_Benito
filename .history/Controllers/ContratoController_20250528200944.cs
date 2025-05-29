@@ -66,38 +66,41 @@ namespace Inmobiliaria_Benito.Controllers
         }
 
 
+[HttpPost]
+[ValidateAntiForgeryToken]
+public IActionResult Create(ContratoViewModel model)
+{
+    if (!ModelState.IsValid)
+    {
+        model.Inquilinos = _context.Inquilinos.Select(i => new SelectListItem { Value = i.InquilinoId.ToString(), Text = i.Nombre + " " + i.Apellido });
+        model.Inmuebles = _context.Inmuebles.Select(i => new SelectListItem { Value = i.InmuebleId.ToString(), Text = i.Direccion });
+        return View(model);
+    }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(ContratoViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                model.Inquilinos = _context.Inquilinos.Select(i => new SelectListItem { Value = i.InquilinoId.ToString(), Text = i.Nombre + " " + i.Apellido });
-                model.Inmuebles = _context.Inmuebles.Select(i => new SelectListItem { Value = i.InmuebleId.ToString(), Text = i.Direccion });
-                return View(model);
-            }
+    var contrato = model.Contrato;
 
-            var contrato = model.Contrato;
+    // Verificar superposición de contratos
+    var ocupado = _context.Contratos.Any(c =>
+        c.IdInmueble == contrato.IdInmueble &&
+        contrato.FechaDesde <= c.FechaHasta &&
+        contrato.FechaHasta >= c.FechaDesde);
 
-            // Verificar superposición de contratos
-            var ocupado = _context.Contratos.Any(c =>
-                c.IdInmueble == contrato.IdInmueble &&
-                contrato.FechaDesde <= c.FechaHasta &&
-                contrato.FechaHasta >= c.FechaDesde);
+    if (ocupado)
+    {
+        TempData["Error"] = "Este inmueble ya tiene un contrato vigente en ese período.";
+        model.Inquilinos = _context.Inquilinos.Select(i => new SelectListItem { Value = i.InquilinoId.ToString(), Text = i.Nombre + " " + i.Apellido });
+        model.Inmuebles = _context.Inmuebles.Select(i => new SelectListItem { Value = i.InmuebleId.ToString(), Text = i.Direccion });
+        return View(model);
+    }
 
-            if (ocupado)
-            {
-                TempData["Error"] = "Este inmueble ya tiene un contrato vigente en ese período.";
-                model.Inquilinos = _context.Inquilinos.Select(i => new SelectListItem { Value = i.InquilinoId.ToString(), Text = i.Nombre + " " + i.Apellido });
-                model.Inmuebles = _context.Inmuebles.Select(i => new SelectListItem { Value = i.InmuebleId.ToString(), Text = i.Direccion });
-                return View(model);
-            }
+    contrato.UsuarioCreacionId = ObtenerUsuarioLogueadoId(); // <-- AGREGAR ESTA LÍNEA
 
-            _context.Contratos.Add(contrato);
-            _context.SaveChanges();
-            return RedirectToAction(nameof(Index));
-        }
+    _context.Contratos.Add(contrato);
+    _context.SaveChanges();
+    return RedirectToAction(nameof(Index));
+}
+
+        
 
         public IActionResult Edit(int id)
         {
