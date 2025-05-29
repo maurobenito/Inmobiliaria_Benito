@@ -3,17 +3,15 @@
 }
 
 <div class="d-flex justify-content-center align-items-center vh-100 bg-light">
-    <div class="card shadow-lg p-4 text-center" style="width: 100%; max-width: 400px;">
-        <img src="~/img/logo.png" alt="Logo Inmobiliaria Benito" class="mb-3" style="height: 80px; object-fit: contain;" />
-
-        <h3 class="mb-4 text-primary">Iniciar Sesión</h3>
+    <div class="card shadow-lg p-4" style="width: 100%; max-width: 400px;">
+        <h3 class="text-center mb-4 text-primary">Iniciar Sesión</h3>
 
         <form asp-action="Login" method="post">
-            <div class="mb-3 text-start">
+            <div class="mb-3">
                 <label for="email" class="form-label">Correo electrónico</label>
                 <input type="email" name="email" class="form-control" required autocomplete="email" />
             </div>
-            <div class="mb-3 text-start">
+            <div class="mb-3">
                 <label for="password" class="form-label">Contraseña</label>
                 <input type="password" name="password" class="form-control" required autocomplete="current-password" />
             </div>
@@ -22,8 +20,10 @@
             </div>
         </form>
 
-        <footer class="mt-4 text-muted">
-            <small>&copy; @DateTime.Now.Year - Inmobiliaria Benito</small>
+        <footer class="mt-4 text-center text-muted">
+            <small>Inmobiliaria Benito</small>
         </footer>
     </div>
 </div>
+
+

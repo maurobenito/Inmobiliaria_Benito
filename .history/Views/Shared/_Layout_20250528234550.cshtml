@@ -10,7 +10,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/">Inmobiliaria Benito </a>
+            <a class="navbar-brand" href="/">Inmobiliaria</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -30,9 +30,6 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Pago" asp-action="Index">Pagos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Propietario" asp-action="Index">Propietarios</a>
                         </li>
                         @if (User.IsInRole("administrador"))
                         {

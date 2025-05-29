@@ -73,7 +73,7 @@ public IActionResult Index()
             return RedirectToAction("Index", "Home");
         }
 
-       [AllowAnonymous]
+        [Authorize]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
@@ -118,7 +118,7 @@ public async Task<IActionResult> Create(Usuario usuario, IFormFile FotoPerfilFil
     return RedirectToAction("Index", "Home");
 }
 
-     [AllowAnonymous]
+     [Authorize]
         public IActionResult EditPerfil()
         {
             int id = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
@@ -161,7 +161,7 @@ public async Task<IActionResult> Create(Usuario usuario, IFormFile FotoPerfilFil
             return RedirectToAction("Index", "Home");
         }
 
-       [AllowAnonymous]
+      [Authorize]
         public IActionResult Details(int id)
         {
             var usuario = _context.Usuarios.Find(id);
