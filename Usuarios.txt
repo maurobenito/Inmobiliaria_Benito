@@ -1,0 +1,4 @@
+admin : mauro@g.com
+Pass: 1234
+Empleado: emp@g.com
+Pass: 123
